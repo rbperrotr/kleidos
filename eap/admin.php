@@ -52,5 +52,8 @@
 				</form>
 				</p>
 			</form>
+			<?php
+				includeFooter();
+			?>
 	</body>
 </html>

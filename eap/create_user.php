@@ -43,8 +43,8 @@
 		Please note that you are expected to sign up with your Thomson Reuters email address and associated SAFE ID.<br>
 		All accounts not compliant with those rules will be deleted.
 		If you have trouble signing in, please contact the <a href="mailto: guardians@kleidos.tk">guardians</a>.<br>
-		<footer>
-			<a href="mailto:guardians@kleidos.tk">Contact the guardians</a>.
-		</footer>
+		<?php
+				includeFooter();
+		?>
 	</body>
 </html>

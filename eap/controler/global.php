@@ -17,6 +17,11 @@
 		include('pages/banner_createuser.php');
 	}
 	
+	function includeFooter()
+	{
+		include('pages/footer.php');
+	}
+	
 	function includeIndexContent()
 	{
 		if(isset($_SESSION['user']))

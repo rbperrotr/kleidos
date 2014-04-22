@@ -40,8 +40,8 @@
 			?>
 		</p>
 		<!--/form-->
-		<footer>
-			<a href="mailto:guardians@kleidos.tk">Contact the guardians</a>.
-		</footer>
+		<?php
+				includeFooter();
+		?>
 	</body>
 </html>
