@@ -1,5 +1,5 @@
 <aside>
-	<video class="video_aside" src="resources/kleidos teaser 2.5.mp4" autoplay controls muted width="400">⁪</video⁪⁪>
+	<video class="video_aside" src="resources/kleidos launch 1.3.mp4" autoplay controls muted width="400">⁪</video⁪⁪>
 </aside>
 <article>
 	<h1>Eikon Kleidos Introduction</h1>

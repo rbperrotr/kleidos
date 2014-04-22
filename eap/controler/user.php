@@ -44,13 +44,17 @@
 				'safeID' => $safeID
 			));		
 			//prepare email for notification to the guardians
-			$passage_ligne = "\r\n";
-			$header = "From: \"The guardians\"<guardians@kleidos.tk>".$passage_ligne;			$header.= "Reply-to: \"WeaponsB\" <weaponsb@mail.fr>".$passage_ligne;				$header.= "MIME-Version: 1.0".$passage_ligne;							$header.= "Content-Type: multipart/alternative;".$passage_ligne." boundary=\"$boundary\"".$passage_ligne;
+			$new_line = "\r\n";
+			$header = "From: \"The guardians\"<guardians@kleidos.tk>".$new_line;
+			$header.= "Reply-to: \"The guardians\" <guardians@kleidos.tk>".$new_line;
+			$header.= "MIME-Version: 1.0".$new_line;
+			$header.= "Content-Type: multipart/alternative;".$new_line." boundary=\"$boundary\"".$new_line;
 
 			$to="Guardians@kleidos.tk";
 			$subject="NEW USER: ".$firstname." ".$lastname;
 			$now=date('Y-m-d H:i:s');
-			$message="A new user has just signed up on ".$now;
+			$message="A new user has just signed up on ".$now.$new_line;
+			$message.="with email address ".$login;
 			try
 			{
 				if(!mail($to , $subject , $message, $header));
@@ -58,12 +62,12 @@
 			catch (PDOException $e)
 			{
 				echo_debug("New user mail not sent");
-				die('Erreur : '.$e->getMessage());
+				die('Error : '.$e->getMessage());
 			}
 		}
 		catch (PDOException $e)
 		{
-			die('Erreur : '.$e->getMessage());
+			die('Error : '.$e->getMessage());
 		}
 	}
 ?>
