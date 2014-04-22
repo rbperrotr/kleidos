@@ -8,7 +8,7 @@
 		$clues = array();
 		while ($donnees = $reponse->fetch())
 		{
-			$clue = new Clue($donnees['id'], $donnees['text'], $donnees['enigmaID'], $donnees['order'], $donnees['publishedDate']);	
+			$clue = new Clue($donnees['id'], $donnees['text'], $donnees['enigmaID'], $donnees['sortID'], $donnees['publishedDate']);	
 			$clues[] = $clue;
 		}
 		
@@ -23,7 +23,7 @@
 		$clues = array();
 		while ($donnees = $reponse->fetch())
 		{
-			$clue = new Clue($donnees['id'], $donnees['text'], $donnees['enigmaID'], $donnees['order'], $donnees['publishedDate']);
+			$clue = new Clue($donnees['id'], $donnees['text'], $donnees['enigmaID'], $donnees['sortID'], $donnees['publishedDate']);
 			$clues[] = $clue;
 		}
 		
@@ -68,7 +68,7 @@
 		$u_clues = array();
 		foreach($clues as $clue)
 		{
-			if($clue->getOrder() <= $clueRank)
+			if($clue->getsortID() <= $clueRank)
 			{
 				$u_clues[] = $clue;
 			}
@@ -101,7 +101,7 @@
 		$clues = array();
 		while($data = $response->fetch())
 		{
-			$clue = new Clue($data['id'], $data['text'], $data['enigmaID'], $data['order'], $data['publishedDate']);
+			$clue = new Clue($data['id'], $data['text'], $data['enigmaID'], $data['sortID'], $data['publishedDate']);
 			$publicationDate = (string)$clue->getPublishedDate();
 			$publicationDate = new DateTime($publicationDate);
 			$publicationDate = $publicationDate->format('Ymd');

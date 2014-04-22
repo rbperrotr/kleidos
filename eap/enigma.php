@@ -83,7 +83,7 @@
 						{
 							if(answer_already_answered($bdd, $enigma->getId(), $_SESSION['uid']))
 							{
-								echo "you already answered this enigma!<br/> As a reminder the correct answer is ".$enigma->getExpected_answer()."<br>";
+								echo "you already answered this enigma!<br/> As a reminder the correct answer is <span class=\"correct_answer\">".$enigma->getExpected_answer()."</span><br>";
 							}
 							else
 							{
@@ -91,7 +91,7 @@
 								$code = code_getANewCode($bdd);
 								code_assignCode($bdd, $_SESSION['uid'], $enigma->getId(), $code->getId());
 								
-								echo "<article><div class=\"correct_answer\">Congratulations! <br/> The correct answer is: ".$enigma->getExpected_answer()."<br/> Thanks to this right answer you won a hint code: ".$code->getText().".<br/> Keep it carefully as you may want to use it later. </div></article>";
+								echo "<article><div class=\"correct_answer\">Congratulations! <br/> The correct answer is:  <span class=\"correct_answer\"> ".$enigma->getExpected_answer()."</span><br/> Thanks to this right answer you won a hint code: ".$code->getText().".<br/> Keep it carefully as you may want to use it later. </div></article>";
 							}
 						}
 						else

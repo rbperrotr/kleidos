@@ -4,7 +4,7 @@
 		private $id;
 		private $text;
 		private $enigmaID;
-		private $order;
+		private $sortID;
 		private $publishedDate;
 		
 		
@@ -13,7 +13,7 @@
 			$this->id = $n_id;
 			$this->text = $n_text;
 			$this->enigmaID = $n_enigmaID;
-			$this->order = $n_order;
+			$this->sortID = $n_order;
 			$this->publishedDate = $n_publishedDate;
 		}
 		
@@ -47,14 +47,14 @@
 			$this->enigmaID = $newEnigmaID;
 		}
 		
-		public function getOrder()
+		public function getsortID()
 		{
-			return $this->order;
+			return $this->sortID;
 		}
 		
-		public function setOrder($newOrder)
+		public function setsortID($newsortID)
 		{
-			$this->order = $newOrder;
+			$this->sortID = $newsortID;
 		}
 		
 		public function getpublishedDate()

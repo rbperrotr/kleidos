@@ -8,6 +8,7 @@
     </head>
 	
 	<body>
+		
 		<?php
 			//require('controler/bdd.php');
 			require('controler/global.php');
@@ -25,7 +26,8 @@
 				exit;
 			}
 			?>
-			
+				<h2> Manage DEBUG mode</h2>
+				<p>Debug mode allows debugging by displaying trace on the pages - don't keep it on</p>
 				<p>
 				<form method="post" action="index.php">
 					<p>
@@ -50,6 +52,13 @@
 					<input type="hidden" name="action" value="admin" />
 					<input class="stdButton" type="submit" value="Submit"/>
 				</form>
+				</p>
+				<br>
+				<h2>Informations to connect to the database</h2>
+				<p>
+				<a href="http://members.000webhost.com/login.php">Connect to the server administration console</a><br>
+				Login: rbperrotr@gmail.com<br>
+				password = kleidos2014<br>
 				</p>
 			</form>
 			<?php
