@@ -30,6 +30,41 @@
 		}
 	}
 	
+	//Get Full Name = firstname lastname
+	function user_getFullName($bdd, $userID)
+	{
+		$userquery = $bdd->prepare('SELECT firstname, lastname FROM user WHERE id= :ui2');
+		$userquery->execute(array(
+				'ui2' => $userID
+		));
+		try
+		{
+			$nb_rows = $userquery->rowCount();
+		}
+		catch(Exception $e)
+		{
+			$nb_rows = 0;
+		}
+		echo_debug("User | get_FullName (nb rows=".$nb_rows.")");
+		
+		if($nb_rows > 0)
+		{
+			while ($data = $userquery->fetch())
+			{
+				$firstname = ($data['firstname']);
+				$lastname = ($data['lastname']);
+				$fullname = $firstname.$lastname;
+				echo_debug("User | get_FullName = ".$firstname." ".$lastname."<br/>");
+			}
+		}
+		else
+		{
+			$fullname = "";
+		}
+		return $fullname;
+	}
+	
+	
 	//Add User
 	function user_addUser($bdd, $login, $firstname, $lastname, $password, $safeID)
 	{

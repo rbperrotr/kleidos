@@ -77,6 +77,13 @@
 										$_SESSION['login'] = $user->getFirstName();
 										$_SESSION['uid'] = $user->getId();
 									}
+									else
+									{
+										echo "<p><strong>Wrong password, please try again.</strong></p>";
+										session_destroy();
+										header("Location: index.php");
+										exit;
+									}
 								}
 							}
 							

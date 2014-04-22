@@ -107,6 +107,7 @@
 	//Saving user answer
 	function answer_saveAnswer($bdd, $enigmaID, $userID, $answer)
 	{
+		echo_debug("function answer_saveAnswer");
 		$query = $bdd->prepare('INSERT INTO submitted_answers (enigma_id, user_id, answer, date_time) VALUES (:ei, :ui, :ua, NOW())');
 		$query->execute(array(
 				'ei' => $enigmaID,
@@ -114,16 +115,20 @@
 				'ua' => $answer
 		));
 		//prepare email for notification to the guardians
+		
+		$fullname = user_getFullName($bdd, $userID);
+		
 		$new_line = "\r\n";
+		$boundary = "-----=".md5(rand());
 		$header = "From: \"The guardians\"<guardians@kleidos.tk>".$new_line;
 		$header.= "Reply-to: \"The guardians\" <guardians@kleidos.tk>".$new_line;
 		$header.= "MIME-Version: 1.0".$new_line;
 		$header.= "Content-Type: multipart/alternative;".$new_line." boundary=\"$boundary\"".$new_line;
 
 		$to="Guardians@kleidos.tk";
-		$subject="NEW ANSWER submitted by ".$firstname." ".$lastname;
+		$subject="NEW ANSWER submitted by ".$fullname;
 		$now=date('Y-m-d H:i:s');
-		$message="A user has submitted an answer for enigma ".$enigmaID.$now.$new_line;
+		$message=$fullname." has submitted an answer for enigma ".$enigmaID.$now.$new_line;
 		$message.="Submitted answer ".$answer;
 		try
 		{
