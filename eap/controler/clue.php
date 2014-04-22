@@ -82,15 +82,24 @@
 	 **********************************************************************************************/
 	function clue_getCluesToPublish ($bdd, $enigmaID)
 	{
-		$response = clue_getAllClues($bdd);
+		try
+		{  
+			$response = $bdd->prepare('SELECT * FROM clue WHERE enigmaID =:ei');
+			$response->execute(array(
+				'ei' => $enigmaID
+			));
+		}
+		catch (Exception $e)
+		{
+			die('Error : '.$e->getMessage());
+		}
 		
 		$today = date('Y-m-d');	
 		$today = new DateTime($today);
 		$today = $today->format('Ymd');
 		
 		$clues = array();
-		
-		while ($data = $response->fetch())
+		while($data = $response->fetch())
 		{
 			$clue = new Clue($data['id'], $data['text'], $data['enigmaID'], $data['order'], $data['publishedDate']);
 			$publicationDate = (string)$clue->getPublishedDate();

@@ -120,9 +120,25 @@
 			<?php
 				/* replace code from Matthieu D above, but does not yet manage the hint bought by a user with code */
 				$clues = clue_getCluesToPublish ($bdd, $enigma->getId());
-				foreach($clues as $clue)
+				$nbclues = count($clues);
+				if($nbclues>0)
 				{
-					echo "<p>".$clue->getText()."</p>";
+					echo "<br>";
+					if($nbclues>1)
+					{
+						echo "<h2>Hints:</h2>";
+						echo "<ul>";
+					}
+					else
+					{
+						echo "<h2>Hint:</h2>";
+					}
+					
+					foreach($clues as $clue)
+					{
+						echo "<p><li>".$clue->getText()."</li></p>";
+					}
+					echo "</ul>";
 				}
 			?>
 			<?php
