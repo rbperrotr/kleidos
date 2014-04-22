@@ -1,0 +1,74 @@
+﻿header, footer
+{
+	background-color: #242424;
+}
+
+body
+{
+	font-family: Verdana, Arial, sans-serif;
+	//font-family: "Knowledge Light", Verdana, Arial, sans-serif;
+	color: #488541;
+	background-color: #151515;
+}
+
+p
+{
+	color: #488541;
+}
+a, a:visited{
+	color: #cccccc;
+}
+
+.videa_aside
+{
+	float: left;
+	width: 400px;
+	margin: 10px;
+}
+
+.enigma_picture_aside
+{
+	float: left;
+	width: 250px;
+	margin: 10px;
+}
+
+.underline
+{
+	 text-decoration: underline;
+}
+
+.italic
+{
+	font-style: italic;
+}
+.inline{
+	display: inline;
+}
+.MyButton
+{
+	display: inline-block;
+	height: 25px;
+	background: url('resources/buttonbckg.png') repeat-x;
+	border-radius: 3px;
+	font-size: 0.8em;
+	text-align: center;
+	text-vertical-align: center;
+	padding: 3px 6px 2px 8px;
+	color: #cccccc;
+	background-color: #151515;
+	text-decoration: none;
+	font-family: Tahoma;
+	
+}
+
+.MyButton:hover
+{
+	background-color: #242424;
+}
+.RBPComment
+{
+	font-size: 0.8em;
+	color: #cccccc;
+
+}
