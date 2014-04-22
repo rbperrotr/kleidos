@@ -15,7 +15,7 @@
 		return $clues;		
 	}
 	
-	//Get clue from code
+	//Get clue from for a given EnigmaID
 	function clue_getCluesfromEnigma($bdd, $enigmaID)
 	{
 		$reponse = $bdd->query('SELECT * FROM clue WHERE enigmaID='.$enigmaID);
@@ -75,5 +75,33 @@
 		}
 		
 		return $u_clues;
+	}
+	
+	/**********************************************************************************************
+	 * Return the list of clue ready for publication for a given EnigmaID
+	 **********************************************************************************************/
+	function clue_getCluesToPublish ($bdd, $enigmaID)
+	{
+		$response = clue_getAllClues($bdd);
+		
+		$today = date('Y-m-d');	
+		$today = new DateTime($today);
+		$today = $today->format('Ymd');
+		
+		$clues = array();
+		
+		while ($data = $response->fetch())
+		{
+			$clue = new Clue($data['id'], $data['text'], $data['enigmaID'], $data['order'], $data['publishedDate']);
+			$publicationDate = (string)$clue->getPublishedDate();
+			$publicationDate = new DateTime($publicationDate);
+			$publicationDate = $publicationDate->format('Ymd');
+			
+			if($today >= $publicationDate)
+			{
+				$clues[] = $clue;
+			}
+		}
+		return $clues;		
 	}
 ?>
