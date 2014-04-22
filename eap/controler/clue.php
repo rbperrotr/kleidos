@@ -8,7 +8,7 @@
 		$clues = array();
 		while ($donnees = $reponse->fetch())
 		{
-			$clue = new Clue($donnees['id'], $donnees['text'], $donnees['codeID'], $donnees['order']);	
+			$clue = new Clue($donnees['id'], $donnees['text'], $donnees['codeID'], $donnees['order'], $donnees['publishedDate']);	
 			$clues[] = $clue;
 		}
 		
@@ -23,7 +23,7 @@
 		$clues = array();
 		while ($donnees = $reponse->fetch())
 		{
-			$clue = new Clue($donnees['id'], $donnees['text'], $donnees['enigmaID'], $donnees['order']);
+			$clue = new Clue($donnees['id'], $donnees['text'], $donnees['enigmaID'], $donnees['order'], $donnees['publishedDate']);
 			$clues[] = $clue;
 		}
 		
