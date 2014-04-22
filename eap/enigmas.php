@@ -9,9 +9,6 @@
 	
 	<body>
 		<?php
-			//echo "Where am I? enigmas";	
-		?>
-		<?php
 			require('controler/bdd.php');
 			require('controler/global.php');
 			require('model/user.php');
@@ -30,7 +27,9 @@
 			
 			$enigmas = enigma_getViewableEnigmas($bdd);
 		?>
-			
+		<h1>Eikon Kleidos</h1>
+		<p>Are you ready to start?</p>
+		<p>Here are the enigmas</p>	
 		<p>
 			<?php
 				foreach ($enigmas as $enigma)
