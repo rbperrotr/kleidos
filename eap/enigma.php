@@ -108,13 +108,22 @@
 		
 		<section>
 			<?php 
+				/* Code from Matthieu to display hints
 				$clues = clue_getCluesfromEnigma($bdd, $enigma->getId());
 				$uClues = clue_getCluesofUser($bdd, $enigma->getId(), $_SESSION['uid'], $clues);
 				foreach($uClues as $uClue)
 				{
 					echo "<br />".$uClue->getText()."<br />";
 				}
-		
+				*/
+			?>
+			<?php
+				/* replace code from Matthieu D above, but does not yet manage the hint bought by a user with code */
+				$clues = clue_getCluesToPublish ($bdd, $enigma->getId());
+				foreach($clues as $clue)
+				{
+					echo "<p>".$clue->getText()."</p>";
+				}
 			?>
 			<?php
 			if ($enigma->getBuyClue()==true)
