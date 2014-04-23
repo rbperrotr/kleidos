@@ -122,13 +122,13 @@
 				$subject="Welcome in Kleidos world!";
 				$now=date('Y-m-d H:i:s');
 				$message="Hello ".$firstname." ".$lastname.".".$new_line;
-				$message.="You have created an acount on ".$now." with email address ".$login.".".$newline.$newline;
-				$message.="If you did not request for an account creation, then send an email to guardians@kleidos.tk.".$newline.$newline;
-				$message.="Are you brave enough?".$newline;
-				$message.="Connect to http://www.kleidos.tk to take part in the adventure.".$newline.$newline;
-				$message.="________________________".$newline;
-				$message.="The guardians of Kleidos".$newline;
-				$message.="guardians@kleidos.tk".$newline;
+				$message.="You have created an acount on ".$now." with email address ".$login.".".$new_line.$new_line;
+				$message.="If you did not request for an account creation, then send an email to guardians@kleidos.tk.".$new_line.$new_line;
+				$message.="Are you brave enough?".$new_line;
+				$message.="Connect to http://www.kleidos.tk to take part in the adventure.".$new_line.$new_line;
+				$message.="________________________".$new_line;
+				$message.="The guardians of Kleidos".$new_line;
+				$message.="guardians@kleidos.tk".$new_line;
 
 				try
 				{
