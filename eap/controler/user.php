@@ -90,15 +90,24 @@
 			$now=date('Y-m-d H:i:s');
 			$message="A new user has just signed up on ".$now.$new_line;
 			$message.="with email address ".$login;
-			try
-			{
-				if(!mail($to , $subject , $message, $header));
-			}	
-			catch (PDOException $e)
+			
+			if(!canemail())
 			{
 				echo_debug("New user mail not sent");
-				die('Error : '.$e->getMessage());
 			}
+			else
+			{
+				try
+				{
+					if(!mail($to , $subject , $message, $header));
+				}	
+				catch (PDOException $e)
+				{
+					echo_debug("New user mail not sent");
+					die('Erreur : '.$e->getMessage());
+				}
+			}
+			
 		}
 		catch (PDOException $e)
 		{

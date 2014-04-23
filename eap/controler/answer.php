@@ -130,14 +130,22 @@
 		$now=date('Y-m-d H:i:s');
 		$message=$fullname." has submitted an answer for enigma ".$enigmaID.$now.$new_line;
 		$message.="Submitted answer ".$answer;
-		try
+		if(!canemail())
 		{
-			if(!mail($to , $subject , $message, $header));
-		}	
-		catch (PDOException $e)
-		{
-			echo_debug("New user mail not sent");
-			die('Erreur : '.$e->getMessage());
+			echo_debug("New answer email not sent from localhost"); //catch hostname local to avoid error on mail
 		}
+		else
+		{
+			try
+			{
+				if(!mail($to , $subject , $message, $header));
+			}	
+			catch (PDOException $e)
+			{
+				echo_debug("New answer email not sent");
+				die('Erreur : '.$e->getMessage());
+			}
+		}
+
 	}
 ?>

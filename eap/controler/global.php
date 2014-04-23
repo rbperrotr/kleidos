@@ -66,4 +66,26 @@
 			}
 		}
 	}
+	
+	function canemail()
+	{
+		if(isset($_SESSION['EMAILNOTIF']))
+		{
+			if($_SESSION['EMAILNOTIF']==1)
+			{
+				$canemail=  TRUE;
+				echo_debug("Send email notif");
+			}
+			else
+			{
+				$canemail=  FALSE;
+				echo_debug("Do not send email notif");
+			}
+		}
+		else
+		{
+			$canemail=  FALSE;
+		}
+		return $canemail;
+	}
 ?>

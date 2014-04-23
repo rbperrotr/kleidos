@@ -19,6 +19,7 @@
 					require('model/truser.php');
 					require('controler/truser.php');
 					
+					$_SESSION['EMAILNOTIF']=1;
 					$login = false;
 					if(isset($_POST['action']))
 					{
@@ -49,14 +50,14 @@
 									echo 'Account not created, please make sure passwords are identical.';
 									session_destroy();
 									header("Location: index.php");
-									exit;
+									//exit;
 								}
 								elseif(!strrpos($login, '@thomsonreuters.com'))
 								{
 									echo 'Account not created, a Thomson Reuters valid email is required.';
 									session_destroy();
 									header("Location: index.php");
-									exit;
+									//exit;
 								}
 								elseif(!truser_check_email_safeID_compliance($bdd, $login, $safe))
 								{
@@ -118,7 +119,7 @@
 								}
 							}
 						}
-						elseif(htmlspecialchars($_POST['action']) == "admin")
+						elseif(htmlspecialchars($_POST['action']) == "debug_mode")
 						{
 							if(isset($_POST['checkbox_debug']))
 							{
@@ -129,6 +130,19 @@
 							{
 								echo_debug("debug goes to OFF<br/>");
 								$_SESSION['DEBUG']=0;
+							}
+						}
+						elseif(htmlspecialchars($_POST['action']) == "email_notif")
+						{
+							if(isset($_POST['checkbox_email']))
+							{
+								echo_debug("email notification goes to ON<br/>");
+								$_SESSION['EMAILNOTIF']=1;								
+							}
+							else
+							{
+								echo_debug("email notification goes to OFF<br/>");
+								$_SESSION['EMAILNOTIF']=0;
 							}
 						}
 					}
@@ -144,5 +158,6 @@
 		<?php
 				includeFooter();
 		?>
+		
 	</body>
 </html>
