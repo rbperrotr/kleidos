@@ -25,17 +25,22 @@
 			includeBannerCreateUser();
 		?>
 		<h1 class="formtitle">Create an account</h1>
-		<form class="stitched_" action="index.php" method="post">
-			<div class="formtextinputlabel">Email address*</div><input class="formtextinput" type="text" name="email"><br>
+		<form action="index.php" method="post">
+			<div class="formtextinputlabel">Email address*</div><input class="formtextinput" type="text" name="email">  You will get a confirmation of registration by email.<br>
 			<div class="formtextinputlabel">First name*</div><input class="formtextinput" type="text" name="fname"><br>
 			<div class="formtextinputlabel">Last name*</div><input class="formtextinput" type="text" name="lname"><br>
-			<div class="formtextinputlabel">Create password*</div><input class="formtextinput" type="password" name="pwd"><span class="formtextinputlabel"> Re-enter password*</span><input class="formtextinput" type="password" name="pwd2">	<br>
+			<div class="formtextinputlabel">Create password*</div><input class="formtextinput" type="password" name="pwd"><span class="formtextinputlabel">  Re-enter password*</span><input class="formtextinput" type="password" name="pwd2"><br>
 			<div class="formtextinputlabel">Safe ID*</div><input class="formtextinput" type="text" name="safe"><br>
 			<br>
-			<input type="hidden" name="action" value="create_user" />
-			<input class="stdButton" type="submit" value="Submit">
-			<!--button class="stdButton" name="buttonclicked" type="submit" value="value_Submit">Submit</button-->
-			<!--button class="stdButton" name="buttonclicked" type="submit" value="value_Cancel">Cancel</button-->
+			<input type="hidden" name="action" value="create_user"/>
+			<input class="stdButton" type="submit" value="Submit"/>
+			<!--
+			<button class="stdButton" name="buttonclicked" type="submit" value="value_Submit">Submit2</button>
+			<button class="stdButton" name="buttonclicked" type="submit" value="value_Cancel">Cancel2</button>
+
+			<input type="hidden" name="action" value="email_notif" />
+			<input class="stdButton" type="submit" value="Submit"/>
+			-->
 		</form>
 		<br>
 		* marks required fields

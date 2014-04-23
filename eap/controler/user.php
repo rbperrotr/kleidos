@@ -78,25 +78,58 @@
 				'password' => $password,
 				'safeID' => $safeID
 			));		
-			//prepare email for notification to the guardians
-			$new_line = "\r\n";
-			$header = "From: \"The guardians\"<guardians@kleidos.tk>".$new_line;
-			$header.= "Reply-to: \"The guardians\" <guardians@kleidos.tk>".$new_line;
-			$header.= "MIME-Version: 1.0".$new_line;
-			$header.= "Content-Type: multipart/alternative;".$new_line." boundary=\"$boundary\"".$new_line;
-
-			$to="Guardians@kleidos.tk";
-			$subject="NEW USER: ".$firstname." ".$lastname;
-			$now=date('Y-m-d H:i:s');
-			$message="A new user has just signed up on ".$now.$new_line;
-			$message.="with email address ".$login;
 			
+			//email notifications 
 			if(!canemail())
 			{
 				echo_debug("New user mail not sent");
 			}
 			else
 			{
+				//prepare email for notification to the guardians
+				$new_line = "\r\n";
+				$boundary = "-----=".md5(rand());
+				$header = "From: \"The guardians\"<guardians@kleidos.tk>".$new_line;
+				$header.= "Reply-to: \"The guardians\" <guardians@kleidos.tk>".$new_line;
+				$header.= "MIME-Version: 1.0".$new_line;
+				$header.= "Content-Type: multipart/alternative;".$new_line." boundary=\"$boundary\"".$new_line;
+
+				$to="Guardians@kleidos.tk";
+				$subject="NEW USER: ".$firstname." ".$lastname;
+				$now=date('Y-m-d H:i:s');
+				$message="A new user has just signed up on ".$now.$new_line;
+				$message.="with email address ".$login;
+
+				try
+				{
+					if(!mail($to , $subject , $message, $header));
+				}	
+				catch (PDOException $e)
+				{
+					echo_debug("New user mail not sent");
+					die('Erreur : '.$e->getMessage());
+				}
+				
+				//prepare email for notification to the new user
+				$new_line = "\r\n";
+				$boundary = "-----=".md5(rand());
+				$header = "From: \"The guardians\"<guardians@kleidos.tk>".$new_line;
+				$header.= "Reply-to: \"The guardians\" <guardians@kleidos.tk>".$new_line;
+				$header.= "MIME-Version: 1.0".$new_line;
+				$header.= "Content-Type: multipart/alternative;".$new_line." boundary=\"$boundary\"".$new_line;
+
+				$to=$login;
+				$subject="Welcome in Kleidos world!";
+				$now=date('Y-m-d H:i:s');
+				$message="Hello ".$firstname." ".$lastname.".".$new_line;
+				$message.="You have created an acount on ".$now." with email address ".$login.".".$newline.$newline;
+				$message.="If you did not request for an account creation, then send an email to guardians@kleidos.tk.".$newline.$newline;
+				$message.="Are you brave enough?".$newline;
+				$message.="Connect to http://www.kleidos.tk to take part in the adventure.".$newline.$newline;
+				$message.="________________________".$newline;
+				$message.="The guardians of Kleidos".$newline;
+				$message.="guardians@kleidos.tk".$newline;
+
 				try
 				{
 					if(!mail($to , $subject , $message, $header));

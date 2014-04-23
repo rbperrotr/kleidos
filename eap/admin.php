@@ -81,6 +81,9 @@
 				</form>
 				</p>				
 				<br>
+				<h2>Sign in page</h2>
+				<p><a href="create_user.php">Sign up!</a></p>
+				<br>
 				<h2>Informations to connect to the database</h2>
 				<p>
 				<a href="http://members.000webhost.com/login.php">Connect to the server administration console</a><br>

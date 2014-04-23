@@ -18,8 +18,7 @@
 	//Get truserid from safeid
 	function truser_getTRUserfromsafeid($bdd, $safeID)
 	{
-	echo_debug("<script type='text/javascript'>alert('truser_getTRUserfromsafeid');</script>");
-	try
+		try
 		{
 			$reponse = $bdd->prepare("SELECT id FROM truser where safeID = :safeID");
 			$reponse->execute(array(
@@ -51,14 +50,12 @@
 		{
 			$truserid = -1;
 		}
-		echo_debug("<script type='text/javascript'>alert('truser_getTRUserfromsafeid'".$truserid.");</script>");
 		return $truserid;
 	}
 	
 	//Get truserid from email
 	function truser_getTRUserfromemail($bdd, $email)
 	{
-	echo_debug("<script type='text/javascript'>alert('truser_getTRUserfromemail');</script>");
 	try
 		{
 			$reponse = $bdd->prepare("SELECT id FROM truser where email = :email");
