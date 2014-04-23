@@ -29,7 +29,7 @@
 		?>
 		<h1>Eikon Kleidos</h1>
 		<p>Are you ready to start?</p>
-		<p>Here are the enigmas</p>	
+		<p>Here are the enigmas, they will be published regularly.</p>	
 		<p>
 			<?php
 				foreach ($enigmas as $enigma)
