@@ -46,7 +46,7 @@
 		* marks required fields
 		<br>
 		Please note that you are expected to sign up with your Thomson Reuters email address and associated SAFE ID.<br>
-		All accounts not compliant with those rules will be deleted.
+		All accounts not compliant with those rules will be deleted. Do not use your SafeID password as it it not linked nor as secure.<br>
 		If you have trouble signing in, please contact the <a href="mailto: guardians@kleidos.tk">guardians</a>.<br>
 		<?php
 				includeFooter();
