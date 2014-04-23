@@ -113,4 +113,34 @@
 		}
 		return $clues;		
 	}
+	
+	/**********************************************************************************************
+	 * Return the date of clue number N for a given EnigmaID
+	 **********************************************************************************************/
+	function clue_getClueOnePublicationDate ($bdd, $enigmaID, $sortID)
+	{
+		try
+		{  
+			$response = $bdd->prepare('SELECT * FROM clue WHERE enigmaID =:ei and sortID=:si');
+			$response->execute(array(
+				'ei' => $enigmaID,
+				'si' => $sortID
+			));
+		}
+		catch (Exception $e)
+		{
+			die('Error : '.$e->getMessage());
+		}
+
+		while($data = $response->fetch())
+		{
+			$clue = new Clue($data['id'], $data['text'], $data['enigmaID'], $data['sortID'], $data['publishedDate']);
+			$publicationDate = (string)$clue->getPublishedDate();
+			$publicationDate = new DateTime($publicationDate);
+			$publicationDate = $publicationDate->format('Ymd');
+			
+		}
+		return $publicationDate;	
+	}
+	
 ?>
