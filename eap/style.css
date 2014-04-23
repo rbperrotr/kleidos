@@ -251,6 +251,12 @@ Button:hover
 	color: #33ff00;
 }
 
+.strong_correct_answer {
+	color: #cccccc;
+	text-decoration: bold;
+	font-size: 1.1em;
+}
+
 .formtitle
 {
 	font-family: "Segoe UI Light","Segoe UI Web Light","Segoe UI Web Regular","Segoe UI","Segoe UI Symbol","HelveticaNeue-Light","Helvetica Neue",Arial,sans-serif;
@@ -329,8 +335,4 @@ strong
    box-shadow: 0 0 0 4px #242424, 2px 1px 6px 4px rgba(10, 10, 0, 0.5);
    //text-shadow: -1px -1px #aa3030;
    font-weight: normal;
-}
-.correct_answer {
-	color: #cccccc;
-	text-decoration: bold;
 }
