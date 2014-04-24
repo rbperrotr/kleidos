@@ -25,7 +25,8 @@
 				header("Location: index.php");
 				exit;
 			}
-			?>
+		?>
+			<section>
 				<h2> Manage DEBUG mode</h2>
 				<p>Debug mode allows debugging by displaying trace on the pages - don't keep it on</p>
 				<p>
@@ -53,46 +54,52 @@
 					<input class="stdButton" type="submit" value="Submit"/>
 				</form>
 				</p>
+			</section>
+			<section>
 				<h2> Manage Email notification</h2>
 				<p>Desactivate Email notification when using in localhost</p>
 				<p>
-				<form method="post" action="index.php">
-					<p>
-					<?php
-						if(isset($_SESSION['EMAILNOTIF']))
-						{
-							if($_SESSION['EMAILNOTIF']==1)
+					<form method="post" action="index.php">
+						<p>
+						<?php
+							if(isset($_SESSION['EMAILNOTIF']))
 							{
-								echo "<input type=\"checkbox\" name=\"checkbox_email\" id=\"checkbox_email\" checked=\"checked\"/> <label for=\"checkbox_email\">Email notification</label>";
+								if($_SESSION['EMAILNOTIF']==1)
+								{
+									echo "<input type=\"checkbox\" name=\"checkbox_email\" id=\"checkbox_email\" checked=\"checked\"/> <label for=\"checkbox_email\">Email notification</label>";
+								}
+								else{
+									echo "<input type=\"checkbox\" name=\"checkbox_email\" id=\"checkbox_email\"/> <label for=\"checkbox_email\">Email notification</label>";
+								}
 							}
-							else{
+							else
+							{
+								$_SESSION['EMAILNOTIF']=0;
 								echo "<input type=\"checkbox\" name=\"checkbox_email\" id=\"checkbox_email\"/> <label for=\"checkbox_email\">Email notification</label>";
 							}
-						}
-						else
-						{
-							$_SESSION['EMAILNOTIF']=0;
-							echo "<input type=\"checkbox\" name=\"checkbox_email\" id=\"checkbox_email\"/> <label for=\"checkbox_email\">Email notification</label>";
-						}
-					?>
-					</p>
-					<input type="hidden" name="action" value="email_notif" />
-					<input class="stdButton" type="submit" value="Submit"/>
-				</form>
+						?>
+						</p>
+						<input type="hidden" name="action" value="email_notif" />
+						<input class="stdButton" type="submit" value="Submit"/>
+					</form>
 				</p>				
 				<br>
+			</section>
+			<section>
 				<h2>Sign in page</h2>
 				<p><a href="create_user.php">Sign up!</a></p>
 				<br>
+				
 				<h2>Informations to connect to the database</h2>
 				<p>
-				<a href="http://members.000webhost.com/login.php">Connect to the server administration console</a><br>
-				Login: rbperrotr@gmail.com<br>
-				password = kleidos2014<br>
+					<a href="http://members.000webhost.com/login.php">Connect to the server administration console</a><br>
+					Login: rbperrotr@gmail.com<br>
+					password = kleidos2014<br>
 				</p>
-			</form>
-			<?php
-				includeFooter();
-			?>
+				<div>
+					<?php include('pages/admin_users.php');?>
+				</div>
+			</section>
+
 	</body>
 </html>

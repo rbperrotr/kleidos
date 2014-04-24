@@ -20,7 +20,7 @@
 					require('controler/truser.php');
 					
 					$_SESSION['EMAILNOTIF']=0;
-					//$_SESSION['DEBUG']=1; // to comment in normal use
+					$_SESSION['DEBUG']=1; // to comment in normal use
 					$login = false;
 					echo_debug("INDEX | Starting<br>");
 					if(isset($_POST['action']))
