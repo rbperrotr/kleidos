@@ -7,8 +7,9 @@
 		private $lastname;
 		private $password;
 		private $safeID;
+		private $registrationdate;
 		
-		function User($n_id, $n_login, $n_firstname, $n_lastname, $n_password, $n_safeID)
+		function User($n_id, $n_login, $n_firstname, $n_lastname, $n_password, $n_safeID, $n_registrationdate)
 		{
 			$this->id = $n_id;
 			$this->login = $n_login;
@@ -16,6 +17,7 @@
 			$this->lastname = $n_lastname;
 			$this->password = $n_password;
 			$this->safeID = $n_safeID;
+			$this->registrationdate = $n_registrationdate;
 		}
 		
 		public function getId()
@@ -76,6 +78,16 @@
 		public function setSafeID($newSafeID)
 		{
 			$this->safeID = $newSafeID;
+		}
+		
+		public function getregistrationdate()
+		{
+			return $this->registrationdate;
+		}
+		
+		public function setregistrationdate($newregistrationdate)
+		{
+			$this->registrationdate = $newregistrationdate;
 		}
 	}
 ?>

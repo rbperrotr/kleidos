@@ -3,6 +3,7 @@
 	//Confirm User password
 	function user_confirmPassword($bdd, $login, $tempPass)
 	{
+		echo_debug("USER | Start user_confirmPassword");
 		try
 		{
 			$reponse = $bdd->prepare('SELECT * FROM user WHERE login =:login');
@@ -12,12 +13,13 @@
 		}
 		catch (Exception $e)
 		{
-			die('Erreur : '.$e->getMessage());
+			die('Error : '.$e->getMessage());
 		}
 		
-		while ($donnees = $reponse->fetch())
+		while ($data = $reponse->fetch())
 		{
-			$user = new User($donnees['id'], $donnees['login'], $donnees['firstname'], $donnees['lastname'], $donnees['password'], $donnees['safeID']);	
+			$user = new User($data['id'], $data['login'], $data['firstname'], $data['lastname'], $data['password'], $data['safeID'], $data['registrationdate']);	
+			echo_debug("USER | fetch user_confirmPassword");			
 		}
 		
 		if($tempPass == $user->getPassword())
@@ -28,6 +30,7 @@
 		{
 			return false;
 		}
+		echo_debug("USER | End user_confirmPassword");
 	}
 	
 	//Get Full Name = firstname lastname
@@ -68,9 +71,20 @@
 	//Add User
 	function user_addUser($bdd, $login, $firstname, $lastname, $password, $safeID)
 	{
+		$today = date("D M j G:i:s T Y");	//get today's date as a formatted string 
+		$today = new DateTime($today);		//transform string $today as a date variable
+		$today = $today->format("D M j G:i:s T Y");	//transform date variable into an object and set its dateformat
+		/*
+		$today = date('Y-m-d');	
+		$today = new DateTime($today);
+		$today = $today->format('Ymd');
+		*/
+		echo_debug("today in user_addUser = ".$today."<br>");
+		
+				
 		try
 		{
-			$reponse = $bdd->prepare('INSERT INTO user(login, firstname, lastname, password, safeID) VALUES(:login, :firstname, :lastname, :password, :safeID)');
+			$reponse = $bdd->prepare('INSERT INTO user(login, firstname, lastname, password, safeID, registrationdate) VALUES(:login, :firstname, :lastname, :password, :safeID, NOW())');
 			$reponse->execute(array(
 				'login' => $login,
 				'firstname' => $firstname,
