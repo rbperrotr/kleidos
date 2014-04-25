@@ -61,9 +61,11 @@
 			<?php
 				if(isset($_POST['answer']))
 				{
+					echo_debug("ENIGMA | Start answer analyse<br>");
 					$answers = answer_getEnigmaAnswer($enigma->getId(), $bdd);
 					$u_answer = strtoupper(htmlspecialchars($_POST['answer']));
-					echo_debug("enigma | answer = ".$u_answer."<br/>");
+					
+					echo_debug("enigma | user answer = ".$u_answer."<br/>");
 					if (answer_get_time_box_previous_answers($bdd, $enigma->getId(), $_SESSION['uid']))
 					//if (answer_get_time_box_previous_answers($bdd, $enigma->getId(), $_SESSION['uid'] == true))
 					//Test to fix the issue on the nb of try, is the closing bracket on the right place? RBP suspect NO, if this is correct the test agains true is useless
@@ -76,6 +78,7 @@
 							if($answer->getText() == $u_answer)
 							{
 								$good_answer = true;
+								echo_debug("enigma | user answer = ".$u_answer."recognized as CORRECT<br/>");
 							}
 						}
 						
@@ -117,6 +120,7 @@
 									$nbcode=0;
 									$congratulationMessage="";
 									echo_debug("ENIGMA | will not give any codes");
+									echo "<article><div class=\"correct_answer\">Congratulations! <br/> The correct answer is:  <span class=\"strong_correct_answer\"> ".$enigma->getExpected_answer()."</span><br/> Stay tuned to see new enigmas and get code by answering before hints are published.<br/></div></article>";
 								}
 								
 								/*
@@ -129,6 +133,7 @@
 						}
 						else
 						{
+							echo_debug("enigma | user answer = ".$u_answer."NOT recognized as CORRECT<br/>");
 							answer_saveAnswer($bdd, $enigma->getId(), $_SESSION['uid'], $u_answer);
 							echo "<article><div class=\"wrong_answer\">Sorry, this is not a good answer, try again.<br>You can submit up to 5 answers per hour.</div></article>";
 						}

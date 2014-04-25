@@ -4,6 +4,7 @@
 		private $id;
 		private $enigmaID;
 		private $text;
+		private $date_time;
 		
 		function Answer($n_id, $n_enigmaID, $n_text)
 		{
