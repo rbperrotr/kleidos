@@ -8,14 +8,21 @@
     </head>
 	
 	<body>
+		<?php
+			if($_SESSION['uid']!=3 and $_SESSION['uid']!=4 and $_SESSION['uid']!=5)
+				{
+					session_destroy();
+					header("Location: index.php");
+					exit;
+				}
+		?>
 		
 		<?php
-			//require('controler/bdd.php');
 			require('controler/global.php');
-			//require('model/user.php');
-			//require('controler/user.php');
-			//require('model/enigma.php');
-			//require('controler/enigma.php');
+			require('controler/bdd.php');
+			require('controler/answer.php');
+			require('model/answer.php');
+			
 			if(checkLogin() == true)
 			{
 				includeBanner();
@@ -26,12 +33,12 @@
 				exit;
 			}
 		?>
-			<section>
-				<h2> Manage DEBUG mode</h2>
-				<p>Debug mode allows debugging by displaying trace on the pages - don't keep it on</p>
+		<section>
+		<h2>Manage DEBUG mode</h2>
+			<p>Debug mode allows debugging by displaying trace on the pages - don\'t keep it on</p>
+			<p>
+			<form method="post" action="index.php">
 				<p>
-				<form method="post" action="index.php">
-					<p>
 					<?php
 						if(isset($_SESSION['DEBUG']))
 						{
@@ -49,57 +56,65 @@
 							echo "<input type=\"checkbox\" name=\"checkbox_debug\" id=\"checkbox_debug\"/> <label for=\"checkbox_debug\">Debug mode</label>";
 						}
 					?>
-					</p>
-					<input type="hidden" name="action" value="debug_mode" />
-					<input class="stdButton" type="submit" value="Submit"/>
-				</form>
 				</p>
-			</section>
-			<section>
-				<h2> Manage Email notification</h2>
-				<p>Desactivate Email notification when using in localhost</p>
-				<p>
-					<form method="post" action="index.php">
-						<p>
-						<?php
-							if(isset($_SESSION['EMAILNOTIF']))
+				<input type="hidden" name="action" value="debug_mode" />
+				<input class="stdButton" type="submit" value="Submit"/>
+			</form>
+			</p>
+		</section>
+
+		<section>
+			<h2> Manage Email notification</h2>
+			<p>Desactivate Email notification when using in localhost</p>
+			<p>
+				<form method="post" action="index.php">
+					<p>
+					<?php
+						if(isset($_SESSION['EMAILNOTIF']))
+						{
+							if($_SESSION['EMAILNOTIF']==1)
 							{
-								if($_SESSION['EMAILNOTIF']==1)
-								{
-									echo "<input type=\"checkbox\" name=\"checkbox_email\" id=\"checkbox_email\" checked=\"checked\"/> <label for=\"checkbox_email\">Email notification</label>";
-								}
-								else{
-									echo "<input type=\"checkbox\" name=\"checkbox_email\" id=\"checkbox_email\"/> <label for=\"checkbox_email\">Email notification</label>";
-								}
+								echo "<input type=\"checkbox\" name=\"checkbox_email\" id=\"checkbox_email\" checked=\"checked\"/> <label for=\"checkbox_email\">Email notification</label>";
 							}
-							else
-							{
-								$_SESSION['EMAILNOTIF']=0;
+							else{
 								echo "<input type=\"checkbox\" name=\"checkbox_email\" id=\"checkbox_email\"/> <label for=\"checkbox_email\">Email notification</label>";
 							}
-						?>
-						</p>
-						<input type="hidden" name="action" value="email_notif" />
-						<input class="stdButton" type="submit" value="Submit"/>
-					</form>
-				</p>				
-				<br>
-			</section>
-			<section>
-				<h2>Sign in page</h2>
-				<p><a href="create_user.php">Sign up!</a></p>
-				<br>
-				
-				<h2>Informations to connect to the database</h2>
-				<p>
-					<a href="http://members.000webhost.com/login.php">Connect to the server administration console</a><br>
-					Login: rbperrotr@gmail.com<br>
-					password = kleidos2014<br>
-				</p>
-				<div>
-					<?php include('pages/admin_users.php');?>
-				</div>
-			</section>
-
+						}
+						else
+						{
+							$_SESSION['EMAILNOTIF']=0;
+							echo "<input type=\"checkbox\" name=\"checkbox_email\" id=\"checkbox_email\"/> <label for=\"checkbox_email\">Email notification</label>";
+						}
+					?>
+					</p>
+					<input type="hidden" name="action" value="email_notif" />
+					<input class="stdButton" type="submit" value="Submit"/>
+				</form>
+			</p>				
+			<br>
+		</section>
+		<section>
+			<h2>Sign in page</h2>
+			<p><a href="create_user.php">Sign up!</a></p>
+			<br>
+			
+			<h2>Informations to connect to the database</h2>
+			<p>
+				<a href="http://members.000webhost.com/login.php">Connect to the server administration console</a><br>
+				Login: rbperrotr@gmail.com<br>
+				password = kleidos2014<br>
+			</p>
+		</section>
+		<section>
+			<div>
+				<?php include('pages/admin_users.php');?>
+			</div>
+		</section>
+		<section>
+			<div>
+				<?php include('pages/admin_answers.php');?>
+			</div>
+		</section>
+			
 	</body>
 </html>

@@ -408,6 +408,11 @@ strong
    font-weight: normal;
 }
 
-#a_au{
+.admHidden
+{
 	display: none;
+}
+.admUnhidden
+{
+	display: block;
 }
