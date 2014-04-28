@@ -21,7 +21,7 @@ function unhide(divID) {
 		require('model/user.php');
 		
 		$users = admin_getallusers($bdd);
-		$now = date('Y-m-d');	
+		$now = date('Y-m-d H:i:s');	
 		$now = new DateTime($now);
 		$now = $now->format('d-M-Y H:i:s e');
 		echo("Current time on server: ".$now."<br>");
