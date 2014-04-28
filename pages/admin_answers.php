@@ -37,7 +37,10 @@ function unhide(divID) {
 
 	<h3>List of answers</h3>
 	<?php
-		
+		$now = date('Y-m-d');	
+		$now = new DateTime($now);
+		$now = $now->format('d-M-Y H:i:s e');
+		echo("Current time on server: ".$now."<br>");
 		$answers = admin_getallanswers($bdd);
 		
 		echo('<a href="javascript:unhide(\'AnswersList\');">Display/hide list of answers</a>');

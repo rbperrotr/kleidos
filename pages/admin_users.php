@@ -21,6 +21,10 @@ function unhide(divID) {
 		require('model/user.php');
 		
 		$users = admin_getallusers($bdd);
+		$now = date('Y-m-d');	
+		$now = new DateTime($now);
+		$now = $now->format('d-M-Y H:i:s e');
+		echo("Current time on server: ".$now."<br>");
 		
 		echo('<a href="javascript:unhide(\'UsersList\');">Display list of users / Hide</a>');
 		echo('<div id="UsersList" class="admHidden">');
