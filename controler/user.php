@@ -56,7 +56,7 @@
 			{
 				$firstname = ($data['firstname']);
 				$lastname = ($data['lastname']);
-				$fullname = $firstname.$lastname;
+				$fullname = $firstname." ".$lastname;
 				echo_debug("User | get_FullName = ".$firstname." ".$lastname."<br/>");
 			}
 		}
@@ -160,5 +160,38 @@
 		{
 			die('Error : '.$e->getMessage());
 		}
+	}
+
+	//get email Notif frequency
+	function user_getEmailFrequency($bdd, $userID)
+	{
+		echo_debug("User | Start get_emailNotif <br>");
+		$userquery = $bdd->prepare('SELECT emailNotif as emailNotif FROM user WHERE id= :ui2');
+		$userquery->execute(array(
+				'ui2' => $userID
+		));
+		try
+		{
+			$nb_rows = $userquery->rowCount();
+		}
+		catch(Exception $e)
+		{
+			$nb_rows = 0;
+		}
+		echo_debug("User | get_emailNotif (nb rows=".$nb_rows.")<br>");
+		
+		if($nb_rows > 0)
+		{
+			while ($data = $userquery->fetch())
+			{
+				$emailNotif = ($data['emailNotif']);
+				echo_debug("User | get_EmailNotif = ".$emailNotif."<br/>");
+			}
+		}
+		else
+		{
+			$emailNotif = "None";
+		}
+		return $emailNotif;
 	}
 ?>

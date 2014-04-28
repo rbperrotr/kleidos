@@ -8,6 +8,7 @@
 		private $password;
 		private $safeID;
 		private $registrationdate;
+		private $emailNotif;
 		
 		function User($n_id, $n_login, $n_firstname, $n_lastname, $n_password, $n_safeID, $n_registrationdate)
 		{
@@ -18,6 +19,7 @@
 			$this->password = $n_password;
 			$this->safeID = $n_safeID;
 			$this->registrationdate = $n_registrationdate;
+			$this->emailNotif = "Daily";
 		}
 		
 		public function getId()
@@ -88,6 +90,16 @@
 		public function setregistrationdate($newregistrationdate)
 		{
 			$this->registrationdate = $newregistrationdate;
+		}
+		
+		public function getemailNotif()
+		{
+			return $this->emailNotif;
+		}
+		
+		public function setemailNotif($newemailNotif)
+		{
+			$this->emailNotif = $newemailNotif;
 		}
 	}
 ?>
