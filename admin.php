@@ -96,10 +96,14 @@
 					Login: rbperrotr@gmail.com<br>
 					password = kleidos2014<br>
 				</p>
+			</section>
+			<section>	
 				<div>
 					<?php include('pages/admin_users.php');?>
 				</div>
 			</section>
+			
+
 
 	</body>
 </html>

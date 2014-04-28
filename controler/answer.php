@@ -3,6 +3,7 @@
 	//Get answer from 1 question
 	function answer_getEnigmaAnswer($enigmaID, $bdd)
 	{
+		echo_debug("answer_getEnigmaAnswer for enigmaID=".$enigmaID."<br>");
 		$reponse = $bdd->query('SELECT * FROM answer where enigmaId ='.$enigmaID);
 		
 		$answers = array();
@@ -19,8 +20,13 @@
 	//Did I already answer to this enigma correctly?
 	function answer_already_answered($bdd, $enigmaID, $userID) 
 	{
-		$query = $bdd->prepare('SELECT count(submitted_answers.id) as total from submitted_answers, enigma where submitted_answers.enigma_ID=enigma.id and submitted_answers.answer=enigma.expected_answer and submitted_answers.user_id=:ui');	
+		echo_debug("ANSWER | Start answer_already_answered<br>");
+		echo_debug("ANSWER | answer_already_answered: EnigmaID=".$enigmaID.", UserID=".$userID.".<br>");
+		
+		$query = $bdd->prepare('SELECT count(submitted_answers.id) as total from submitted_answers, enigma where submitted_answers.enigma_ID=enigma.id and enigma.id=:ei and submitted_answers.answer=enigma.expected_answer and submitted_answers.user_id=:ui');	
+		
 		$query->execute(array(
+				'ei' => $enigmaID,
 				'ui' => $userID
 		));
 		try
@@ -34,10 +40,10 @@
 		echo_debug("answer_already_answered | nbrows =".$nb_rows."<br/>");
 		if($nb_rows > 0)
 		{
-			while ($donnees = $query->fetch())
+			while ($data = $query->fetch())
 			{
-				$total = ($donnees['total']);
-				echo_debug("answer_already_answered | number of good answer=".$total."<br/>");
+				$total = ($data['total']);
+				echo_debug("answer_already_answered | number of good answer (total)=".$total."<br/>");
 			}
 			if($total > 0)
 			{
@@ -52,7 +58,7 @@
 		{
 			$answer = false;
 		}
-		
+		echo_debug("ANSWER | answer_already_answered return ".$answer."<br>");
 		return $answer;
 	}
 	
@@ -102,6 +108,47 @@
 		}
 		
 		return $answer;
+	}
+	
+	//When did I answered?
+	funtion answer_nbDays_since_publication($bdd, $enigmaID, $userID)
+	{
+		/*
+		SELECT DATEDIFF(MIN(submitted_answers.date_time),enigma.publidate) FROM submitted_answers, enigma WHERE submitted_answers.user_id=3 AND  submitted_answers.enigma_id=7 AND  submitted_answers.enigma_id=enigma.id AND  submitted_answers.answer=enigma.expected_answer
+		*/
+		echo_debug("ANSWER | Start function answer_nbDays_since_publication");
+		$query = $bdd->prepare('SELECT DATEDIFF(MIN(submitted_answers.date_time),enigma.publidate) as nbDays FROM submitted_answers, enigma WHERE submitted_answers.user_id=:ui AND  submitted_answers.enigma_id=:ei AND  submitted_answers.enigma_id=enigma.id AND  submitted_answers.answer=enigma.expected_answer');
+		$query->execute(array(
+				'ei' => $enigmaID,
+				'ui' => $userID
+		));
+		try
+		{
+			$nb_rows = $query->rowCount();
+		}
+		catch(Exception $e)
+		{
+			$nb_rows = 0;
+		}
+		echo_debug("ANSWER | function answer_nbDays_since_publication | nbrows =".$nb_rows."<br/>");
+		$nbdays=100;
+		if($nb_rows > 0)
+		{
+			while ($data = $query->fetch())
+			{
+				$nbDays = ($data['nbDays']);
+				echo_debug("ANSWER | function answer_nbDays_since_publication | number of day(s) since good answer=".$nbDays."<br/>");
+			}
+		}
+		else
+		{
+			$nbDays = -1;
+		}
+		
+		return $nbDays;
+
+		
+		echo_debug("ANSWER | End function answer_nbDays_since_publication");
 	}
 	
 	//Saving user answer

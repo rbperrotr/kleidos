@@ -54,15 +54,6 @@
 			$nb_rows = 0;
 		}
 		
-		/*
-		private $id;
-		private $login;
-		private $firstname;
-		private $lastname;
-		private $password;
-		private $safeID;
-		private $registrationdate;
-		*/
 		$users = array();
 		if($nb_rows > 0)
 		{
@@ -77,4 +68,6 @@
 		
 		echo_debug("ADMIN | Exit getallusers");
 	}
+	
+
 ?>

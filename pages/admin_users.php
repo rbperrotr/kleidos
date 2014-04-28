@@ -3,7 +3,8 @@
 	<?php 
 		require('controler/bdd.php');
 		require('controler/admin.php');
-		echo admin_getnbusers($bdd);
+		echo admin_getnbusers($bdd)-3;
+		echo " (not including the 3 guardians)";
 	?> 
 	</p>
 	<p>List of users
