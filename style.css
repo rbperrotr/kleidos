@@ -407,3 +407,7 @@ strong
    //text-shadow: -1px -1px #aa3030;
    font-weight: normal;
 }
+
+#a_au{
+	display: none;
+}

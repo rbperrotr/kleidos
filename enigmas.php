@@ -15,6 +15,7 @@
 			require('controler/user.php');
 			require('model/enigma.php');
 			require('controler/enigma.php');
+			require('controler/answer.php');
 			if(checkLogin() == true)
 			{
 				includeBanner();
@@ -34,23 +35,24 @@
 			<?php
 				foreach ($enigmas as $enigma)
 				{
-					nbDays=answer_nbDays_since_publication($bdd, $enigma->getRef(), $_SESSION['uid']);
-					if (nbDays == -1)
-					{
-						echo "<a href='enigma.php?ref=".$enigma->getRef()."'><button class=\"enigmaButton\" >".$enigma->getTitle()."</button></a><br />";
-					}
-					elseif (nbDays == 0)
+					$nbDays=answer_nbDays_since_publication($bdd, $enigma->getID(), $_SESSION['uid']);
+					echo_debug("ENIGMAS | analyse nb of days if good answer (nbdays=".$nbDays.")<br>");
+					if ($nbDays == 0)
 					{
 						echo "<a href='enigma.php?ref=".$enigma->getRef()."'><button class=\"enigmaButtonDoubleGold\" >".$enigma->getTitle()."</button></a><br />";
 					}
-					elseif (nbDays == 1)
+					elseif ($nbDays == 1)
 					{
 						echo "<a href='enigma.php?ref=".$enigma->getRef()."'><button class=\"enigmaButtonGold\" >".$enigma->getTitle()."</button></a><br />";
 					}
-					elseif (nbDays > 1)
+					elseif ($nbDays > 1)
 					{
 						echo "<a href='enigma.php?ref=".$enigma->getRef()."'><button class=\"enigmaButtonSilver\" >".$enigma->getTitle()."</button></a><br />";
 					}
+					else
+					{
+						echo "<a href='enigma.php?ref=".$enigma->getRef()."'><button class=\"enigmaButton\" >".$enigma->getTitle()."</button></a><br />";
+					}			
 				}
 			?>
 		</p>

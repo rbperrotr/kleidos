@@ -111,12 +111,12 @@
 	}
 	
 	//When did I answered?
-	funtion answer_nbDays_since_publication($bdd, $enigmaID, $userID)
+	function answer_nbDays_since_publication($bdd, $enigmaID, $userID)
 	{
 		/*
 		SELECT DATEDIFF(MIN(submitted_answers.date_time),enigma.publidate) FROM submitted_answers, enigma WHERE submitted_answers.user_id=3 AND  submitted_answers.enigma_id=7 AND  submitted_answers.enigma_id=enigma.id AND  submitted_answers.answer=enigma.expected_answer
 		*/
-		echo_debug("ANSWER | Start function answer_nbDays_since_publication");
+		echo_debug("ANSWER | Start function answer_nbDays_since_publication for enigmaid=".$enigmaID." and userid=".$userID."<br>");
 		$query = $bdd->prepare('SELECT DATEDIFF(MIN(submitted_answers.date_time),enigma.publidate) as nbDays FROM submitted_answers, enigma WHERE submitted_answers.user_id=:ui AND  submitted_answers.enigma_id=:ei AND  submitted_answers.enigma_id=enigma.id AND  submitted_answers.answer=enigma.expected_answer');
 		$query->execute(array(
 				'ei' => $enigmaID,
@@ -131,24 +131,25 @@
 			$nb_rows = 0;
 		}
 		echo_debug("ANSWER | function answer_nbDays_since_publication | nbrows =".$nb_rows."<br/>");
-		$nbdays=100;
+		$nbDays=-2;
 		if($nb_rows > 0)
 		{
+			echo_debug("ANSWER | function answer_nbDays_since_publication | analyse rows<br/>");
 			while ($data = $query->fetch())
 			{
-				$nbDays = ($data['nbDays']);
-				echo_debug("ANSWER | function answer_nbDays_since_publication | number of day(s) since good answer=".$nbDays."<br/>");
+				$tmpNbDays = ($data['nbDays']);
+				if(!is_null($tmpNbDays))
+					$nbDays=$tmpNbDays;
+				echo_debug("ANSWER | function answer_nbDays_since_publication | analyse rows and return nbDays=".$nbDays."<br/>");
 			}
 		}
 		else
 		{
+			echo_debug("ANSWER | function answer_nbDays_since_publication | no rows<br/>");
 			$nbDays = -1;
 		}
-		
+		echo_debug("ANSWER | function answer_nbDays_since_publication | number of day(s) since good answer=".$nbDays."<br/>");
 		return $nbDays;
-
-		
-		echo_debug("ANSWER | End function answer_nbDays_since_publication");
 	}
 	
 	//Saving user answer
