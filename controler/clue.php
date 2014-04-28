@@ -18,7 +18,8 @@
 	//Get clue from for a given EnigmaID
 	function clue_getCluesfromEnigma($bdd, $enigmaID)
 	{
-		$reponse = $bdd->query('SELECT * FROM clue WHERE enigmaID='.$enigmaID);
+		echo_debug("CLUE | Start function clue_getCluesfromEnigma enigmaID=".$enigmaID."<br>");
+		$reponse = $bdd->query('	'.$enigmaID);
 		
 		$clues = array();
 		while ($donnees = $reponse->fetch())
@@ -28,6 +29,7 @@
 		}
 		
 		return $clues;
+		echo_debug("CLUE | End function clue_getCluesfromEnigma<br>");
 	}
 	
 	

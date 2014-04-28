@@ -34,7 +34,23 @@
 			<?php
 				foreach ($enigmas as $enigma)
 				{
-					echo "<a href='enigma.php?ref=".$enigma->getRef()."'><button class=\"enigmaButton\" >".$enigma->getTitle()."</button></a><br />";
+					nbDays=answer_nbDays_since_publication($bdd, $enigma->getRef(), $_SESSION['uid']);
+					if (nbDays == -1)
+					{
+						echo "<a href='enigma.php?ref=".$enigma->getRef()."'><button class=\"enigmaButton\" >".$enigma->getTitle()."</button></a><br />";
+					}
+					elseif (nbDays == 0)
+					{
+						echo "<a href='enigma.php?ref=".$enigma->getRef()."'><button class=\"enigmaButtonDoubleGold\" >".$enigma->getTitle()."</button></a><br />";
+					}
+					elseif (nbDays == 1)
+					{
+						echo "<a href='enigma.php?ref=".$enigma->getRef()."'><button class=\"enigmaButtonGold\" >".$enigma->getTitle()."</button></a><br />";
+					}
+					elseif (nbDays > 1)
+					{
+						echo "<a href='enigma.php?ref=".$enigma->getRef()."'><button class=\"enigmaButtonSilver\" >".$enigma->getTitle()."</button></a><br />";
+					}
 				}
 			?>
 		</p>

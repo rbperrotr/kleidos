@@ -207,7 +207,6 @@ input:-webkit-autofill:focus {
 	display: inline-block;
 	height: 35px;
 	width: 99%;
-	background: url('resources/buttonbckg.png') repeat-x;
 	border-radius: 0px;
 	border-color:	#cccccc;
 	border-style: solid;
@@ -223,6 +222,78 @@ input:-webkit-autofill:focus {
 	text-decoration: none;
 	font-family: Tahoma;
 	
+}
+
+.enigmaButtonDoubleGold
+{
+	display: inline-block;
+	height: 35px;
+	width: 99%;
+	background: url('resources/done_doublegold.png');
+	background-repeat:no-repeat;
+	background-position:right;
+	border-radius: 0px;
+	border-color:	#cccccc;
+	border-style: solid;
+	border-width: 1px;
+	font-size: 1.1em;
+	text-align: left;
+	vertical-align: bottom;
+	padding: 4px 6px 4px 6px;
+	margin-bottom: 10px;
+	margin-right: 5px;
+	color: #cccccc;
+	background-color: #151515;
+	text-decoration: none;
+	font-family: Tahoma;
+}
+
+.enigmaButtonGold
+{
+	display: inline-block;
+	height: 35px;
+	width: 99%;
+	background: url('resources/done_gold.png');
+	background-repeat:no-repeat;
+	background-position:right;
+	border-radius: 0px;
+	border-color:	#cccccc;
+	border-style: solid;
+	border-width: 1px;
+	font-size: 1.1em;
+	text-align: left;
+	vertical-align: bottom;
+	padding: 4px 6px 4px 6px;
+	margin-bottom: 10px;
+	margin-right: 5px;
+	color: #cccccc;
+	background-color: #151515;
+	text-decoration: none;
+	font-family: Tahoma;
+}
+
+.enigmaButtonSilver
+{
+	display: inline-block;
+	height: 35px;
+	width: 99%;
+	background: url('resources/done_silver.png');
+	background-repeat:no-repeat;
+	background-position:right;
+	border-radius: 0px;
+	border-color:	#cccccc;
+	border-style: solid;
+	border-width: 1px;
+	font-size: 1.1em;
+	text-align: left;
+	vertical-align: bottom;
+	padding: 4px 6px 4px 6px;
+	margin-bottom: 10px;
+	margin-right: 5px;
+	color: #cccccc;
+	background-color: #151515;
+	text-decoration: none;
+	font-family: Tahoma;
 }
 
 Button:hover
