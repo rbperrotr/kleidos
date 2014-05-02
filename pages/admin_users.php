@@ -26,7 +26,7 @@ function unhide(divID) {
 		$now = $now->format('d-M-Y H:i:s e');
 		echo("Current time on server: ".$now."<br>");
 		
-		echo('<a href="javascript:unhide(\'UsersList\');">Display list of users / Hide</a>');
+		echo('<a href="javascript:unhide(\'UsersList\');">Display list of users / Hide</a><br>');
 		echo('<div id="UsersList" class="admHidden">');
 		echo('<table style="width:600px">');
 				foreach ($users as $auser)
@@ -34,5 +34,27 @@ function unhide(divID) {
 					echo ("<tr><td>".$auser->getid()."</td><td>".$auser->getfirstname()."</td><td>".$auser->getlastname()."</td><td>".$auser->getregistrationdate()."</tr>");
 				}
 		echo('</table></div>');
+		
+		$emails = admin_getallemails($bdd);
+		echo('<br><a href="javascript:unhide(\'UsersAllEmails\');">Display list of all emails / Hide</a><br>');
+		echo('This list is for the guardians only, some users can have requested to not receive email from other players. See list of public emails below.<br>');
+		echo('<div id="UsersAllEmails" class="admHidden">');
+		echo('<table style="width:800px" class="bluetext"><tr><td>');
+				foreach ($emails as $anemail)
+				{
+					echo ("".$anemail."; ");
+				}
+		echo('</td></tr></table></div>');
+		
+		$publicemails = admin_getallpublicemails($bdd);
+		echo('<br><a href="javascript:unhide(\'UsersAllPublicEmails\');">Display list of all public emails / Hide</a><br>');
+		echo('This list is the list of email of users who accepted to receive emails from other players.<br>');
+		echo('<div id="UsersAllPublicEmails" class="admHidden">');
+		echo('<table style="width:800px" class="bluetext"><tr><td>');
+				foreach ($publicemails as $apublicemail)
+				{
+					echo ("".$apublicemail."; ");
+				}
+		echo('</td></tr></table></div>');
 	?>
 </section>

@@ -34,6 +34,43 @@
 		return $enigmas;
 	}
 	
+	//returns TRUE if enigma already published
+	function enigma_isPublished($bdd, $EnigmaID)
+	{
+		$query = $bdd->prepare('SELECT publiDate FROM enigma WHERE EnigmaID = :ei');
+		$query->execute(array(
+				'ei' => $EnigmaID
+		));
+		
+		$today = date('Y-m-d');	
+		$today = new DateTime($today);
+		$today = $today->format('Ymd');
+		
+		try
+		{
+			$nb_rows = $query->rowCount();
+		}
+		catch(Exception $e)
+		{
+			$nb_rows = 0;
+		}
+		echo_debug("enigma_isPublished | nbrows =".$nb_rows."<br/>");
+		if($nb_rows > 0)
+		{
+			while ($data = $query->fetch())
+			{
+				$publiDate = ($data['publiDate']);
+				$publiDate = new DateTime($publiDate);
+				$publiDate = $publiDate->format('Ymd');
+				if($today >= $publiDate)
+					$isPublished = TRUE;
+				else
+					$isPublished = FALSE;
+			}
+		}
+		return $isPublished;
+	}
+	
 	//get total number of clues for enigma
 	function enigma_getCluesNb($bdd, $ref)
 	{

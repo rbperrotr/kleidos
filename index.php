@@ -20,7 +20,7 @@
 					require('controler/truser.php');
 					
 					$_SESSION['EMAILNOTIF']=0;
-					$_SESSION['DEBUG']=1; // to comment in normal use
+					//$_SESSION['DEBUG']=1; // to comment in normal use
 					$login = false;
 					echo_debug("INDEX | Starting<br>");
 					if(isset($_POST['action']))
@@ -119,12 +119,12 @@
 								elseif( $pwd != $pwd2)
 								{
 									echo_debug("INDEX | pwd check > pwd <> pw2<br>");
-									echo 'Account not created, please make sure passwords are identical.';
+									echo '<div class=\"error_message\"><strong>Account not created, please make sure passwords are identical.</strong></div>';
 								}
 								elseif(!strrpos($login, '@thomsonreuters.com'))
 								{
 									echo_debug("INDEX | @thomsonreuters.com check : NOT PASSED<br>");
-									echo 'Account not created, a Thomson Reuters valid email is required.';
+									echo '<div class=\"error_message\"><strong>Account not created, a Thomson Reuters valid email is required.</strong></div>';
 								}
 								elseif(!truser_check_email_safeID_compliance($bdd, $login, $safe))
 								{

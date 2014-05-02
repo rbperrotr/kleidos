@@ -58,7 +58,10 @@ input:-webkit-autofill:focus {
 	min-height: 220px;
 }
 
-
+.bluetext
+{	
+	color: #2c85a6;
+}
 .banner
 {
 	vertical-align: top;

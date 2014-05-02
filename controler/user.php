@@ -281,4 +281,37 @@
 		}
 		return $emailNotif;
 	}
+	
+	//get email Other Players (Set to Yes if user accepts to receive emails from others players)
+	function user_getEmailOtherPlayers($bdd, $userID)
+	{
+		echo_debug("User | Start get_emailOtherPlayers <br>");
+		$userquery = $bdd->prepare('SELECT emailOtherPlayers as emailOtherPlayers FROM user WHERE id= :ui2');
+		$userquery->execute(array(
+				'ui2' => $userID
+		));
+		try
+		{
+			$nb_rows = $userquery->rowCount();
+		}
+		catch(Exception $e)
+		{
+			$nb_rows = 0;
+		}
+		echo_debug("User | get_emailOtherPlayers (nb rows=".$nb_rows.")<br>");
+		
+		if($nb_rows > 0)
+		{
+			while ($data = $userquery->fetch())
+			{
+				$emailOtherPlayers = ($data['emailOtherPlayers']);
+				echo_debug("User | get_emailOtherPlayers = ".$emailOtherPlayers."<br/>");
+			}
+		}
+		else
+		{
+			$emailOtherPlayers = "No";
+		}
+		return $emailOtherPlayers;
+	}
 ?>

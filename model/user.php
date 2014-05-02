@@ -9,6 +9,7 @@
 		private $safeID;
 		private $registrationdate;
 		private $emailNotif;
+		private $emailOtherPlayers;
 		
 		function User($n_id, $n_login, $n_firstname, $n_lastname, $n_password, $n_safeID, $n_registrationdate)
 		{
@@ -20,6 +21,7 @@
 			$this->safeID = $n_safeID;
 			$this->registrationdate = $n_registrationdate;
 			$this->emailNotif = "Daily";
+			$this->emailOtherPlayers = "Yes";
 		}
 		
 		public function getId()
@@ -100,6 +102,16 @@
 		public function setemailNotif($newemailNotif)
 		{
 			$this->emailNotif = $newemailNotif;
+		}
+		
+		public function getemailOtherPlayers()
+		{
+			return $this->emailOtherPlayers;
+		}
+		
+		public function setemailOtherPlayers($newemailOtherPlayers)
+		{
+			$this->emailOtherPlayers = $newemailOtherPlayers;
 		}
 	}
 ?>

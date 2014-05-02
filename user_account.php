@@ -49,6 +49,26 @@
 						
 					}
 				}
+				elseif(htmlspecialchars($_POST['action']) == "email_other_players")
+				{
+					if(isset($_POST['EmailOtherPlayers']))
+					{
+						$newEmailOtherPlayers = htmlspecialchars($_POST['EmailOtherPlayers']);
+						$userID = $_SESSION['uid'];
+						echo_debug("USER ACCOUNT | newEmailOtherPlayers=".$newEmailOtherPlayers." for userID=".$userID."<br>");
+						try
+						{
+							$query = $bdd->query("UPDATE user SET emailOtherPlayers=\"".$newEmailOtherPlayers."\" WHERE id=".$userID);
+							$currentEmailOtherPlayers = $newEmailOtherPlayers;
+							echo ("Your preferences have been saved.");
+						}
+						catch (Exception $e)
+						{
+							die('Error : '.$e->getMessage());
+						}
+						
+					}
+				}
 				elseif(htmlspecialchars($_POST['action']) == "change_password")
 				{
 					if(isset($_POST['pwd']) && isset($_POST['pwd2']))
@@ -83,7 +103,8 @@
 		?>
 		<h1>My account</h1>
 			
-		<h2>My email notification preference</h2>	
+		<h2>My preferences</h2>
+		<h3>My email notification preference</h3>	
 		<form method="post" action="user_account.php">
 			<?php
 				$currentEmailNotif = user_getEmailFrequency($bdd, $_SESSION['uid']);
@@ -98,6 +119,22 @@
 			</select>
 			
 			<input type="hidden" name="action" value="email_notif_pref" />
+			<input class="stdButton" type="submit" value="Save"/>
+		</form>
+		<h3>I accept to receive emails from other players</h3>	
+		<form method="post" action="user_account.php">
+			<?php
+				$currentEmailOtherPlayers = user_getEmailOtherPlayers($bdd, $_SESSION['uid']);
+				echo_debug("USER ACCOUNT | $currentEmailOtherPlayers=".$currentEmailOtherPlayers."<br>");
+			?>
+			To help enigma resolution and progress on Kleidos other players can share with you hints or questions.<br>
+			Please note that this feature will be activated soon.<br>
+			<select name="EmailOtherPlayers" class="stdButton" >
+				  <option value="Yes" <?php if($currentEmailOtherPlayers=='Yes') echo("selected=\"selected\""); ?>>Yes</option>
+				  <option value="No" <?php if($currentEmailOtherPlayers=='No') echo("selected=\"selected\""); ?>>No</option>
+			</select>
+			
+			<input type="hidden" name="action" value="email_other_players" />
 			<input class="stdButton" type="submit" value="Save"/>
 		</form>
 		
