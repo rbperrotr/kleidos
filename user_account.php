@@ -14,7 +14,18 @@
 			require('controler/code.php');
 			require('controler/user.php');
 			
-			includeBanner();
+			
+			if(checkLogin() == true)
+			{
+				includeBanner();
+				$userID=$_SESSION['uid'];
+			}
+			else
+			{
+				header("Location: index.php");
+				exit;
+			}
+			
 			
 			if(isset($_POST['action']))
 			{
@@ -38,6 +49,36 @@
 						
 					}
 				}
+				elseif(htmlspecialchars($_POST['action']) == "change_password")
+				{
+					if(isset($_POST['pwd']) && isset($_POST['pwd2']))
+					{
+						$pwd = htmlspecialchars($_POST['pwd']);
+						$pwd2 = htmlspecialchars($_POST['pwd2']);
+						if($pwd=="")
+						{
+							echo_debug("USER ACCOUNT | Change password blank pwd check NOT PASSED<br>");
+							echo '<div class=\"error_message\"><strong>Password unchanged, please fill-in password field.</strong></div>';
+						}
+						elseif($pwd2=="")
+						{
+							echo_debug("USER ACCOUNT | Change password blank pwd heck NOT PASSED<br>");
+							echo '<div class=\"error_message\"><strong>Password unchanged, please retype password.</strong></div>';
+						}
+						elseif( $pwd != $pwd2)
+						{
+							echo_debug("USER ACCOUNT | Change password pwd check > pwd <> pw2<br>");
+							echo '<div class=\"error_message\"><strong>Password unchanged, please make sure passwords are identical.</strong></div>';
+						}
+						else
+						{
+							$pwd = md5(htmlspecialchars($_POST['pwd']));
+							$pwd2 = md5(htmlspecialchars($_POST['pwd2']));
+							user_changePassword($bdd, $userID, $pwd);
+							echo_debug ("USER ACCOUNT | Change password: after password saved.");
+						}
+					}
+				}
 			}
 		?>
 		<h1>My account</h1>
@@ -49,6 +90,7 @@
 				echo_debug("USER ACCOUNT | $currentEmailNotif=".$currentEmailNotif."<br>");
 			?>
 			Select below your preferred frequency to receive your Kleidos status.<br>
+			Please note that automatic notifications are not yet activated.<br>
 			<select name="EmailFrequency" class="stdButton" >
 				  <option value="Daily" <?php if($currentEmailNotif=='Daily') echo("selected=\"selected\""); ?>>Daily</option>
 				  <option value="Weekly" <?php if($currentEmailNotif=='Weekly') echo("selected=\"selected\""); ?>>Weekly</option>
@@ -58,7 +100,23 @@
 			<input type="hidden" name="action" value="email_notif_pref" />
 			<input class="stdButton" type="submit" value="Save"/>
 		</form>
+		
+		<h2> My password</h2>
+		<form method="post" action="user_account.php">
+			<?php
+				$currentPwd = user_getEmailFrequency($bdd, $_SESSION['uid']);
+				echo_debug("USER ACCOUNT | currentPwd=".$currentPwd."<br>");
+			?>
+			To change your password, enter the current and a new one.<br>
+			<div class="formtextinputlabel">New password*</div>
+			<input class="formtextinput" type="password" name="pwd"><br>
+			<div class="formtextinputlabel">Re-enter password*</div>
+			<input class="formtextinput" type="password" name="pwd2"><br>
 			
+			<input type="hidden" name="action" value="change_password" />
+			<input class="stdButton" type="submit" value="Confirm"/>
+		</form>
+		
 		<h2>My codes</h2>		
 		<br>
 		Below are the codes you already won which are still available.<br>

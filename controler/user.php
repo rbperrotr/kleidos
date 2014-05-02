@@ -74,13 +74,8 @@
 		$today = date("D M j G:i:s T Y");	//get today's date as a formatted string 
 		$today = new DateTime($today);		//transform string $today as a date variable
 		$today = $today->format("D M j G:i:s T Y");	//transform date variable into an object and set its dateformat
-		/*
-		$today = date('Y-m-d');	
-		$today = new DateTime($today);
-		$today = $today->format('Ymd');
-		*/
-		echo_debug("today in user_addUser = ".$today."<br>");
 		
+		echo_debug("today in user_addUser = ".$today."<br>");
 				
 		try
 		{
@@ -162,6 +157,98 @@
 		}
 	}
 
+	function user_changePassword($bdd, $userID, $MD5password)
+	{
+		$today = date("D M j G:i:s T Y");	//get today's date as a formatted string 
+		$today = new DateTime($today);		//transform string $today as a date variable
+		$today = $today->format("D M j G:i:s T Y");	//transform date variable into an object and set its dateformat
+		
+		echo_debug("today in user_changePassword = ".$today."<br>");
+				
+		try
+		{	
+			echo_debug("USER | user_changePassword for userID=".$userID."<br>");
+			try
+			{
+				$query = $bdd->query("UPDATE user SET password=\"".$MD5password."\" WHERE id=".$userID);
+				echo ("Your new password has been saved.<br>");
+			}
+			catch (Exception $e)
+			{
+				echo ("<strong>Your new password has not been saved.<strong><br>");
+				die('Error : '.$e->getMessage());
+			}
+			
+			//email notifications 
+			if(!canemail())
+			{
+				echo_debug("User pwd change user mail not sent");
+			}
+			else
+			{
+				//prepare email for notification to the guardians
+				$new_line = "\r\n";
+				$boundary = "-----=".md5(rand());
+				$header = "From: \"The guardians\"<guardians@kleidos.tk>".$new_line;
+				$header.= "Reply-to: \"The guardians\" <guardians@kleidos.tk>".$new_line;
+				$header.= "MIME-Version: 1.0".$new_line;
+				$header.= "Content-Type: multipart/alternative;".$new_line." boundary=\"$boundary\"".$new_line;
+
+				$to="Guardians@kleidos.tk";
+				$subject="USER PASSWORD CHANGED: ".$firstname." ".$lastname;
+				$now=date('Y-m-d H:i:s');
+				$message="A user has changed is password on ".$now.$new_line;
+
+				try
+				{
+					if(!mail($to , $subject , $message, $header));
+				}	
+				catch (PDOException $e)
+				{
+					echo_debug("User password changed mail not sent");
+					die('Error : '.$e->getMessage());
+				}
+				
+				//prepare email for notification to the new user
+				$new_line = "\r\n";
+				$boundary = "-----=".md5(rand());
+				$header = "From: \"The guardians\"<guardians@kleidos.tk>".$new_line;
+				$header.= "Reply-to: \"The guardians\" <guardians@kleidos.tk>".$new_line;
+				$header.= "MIME-Version: 1.0".$new_line;
+				$header.= "Content-Type: multipart/alternative;".$new_line." boundary=\"$boundary\"".$new_line;
+
+				$to=$login;
+				$subject="Kleidos: password changed notification";
+				$now=date('Y-m-d H:i:s');
+				$message="Hello ".$firstname." ".$lastname.".".$new_line;
+				$message.="You have changed your password on ".$now.$new_line.$new_line;
+				$message.="If you did not submit a password change, then send an email to guardians@kleidos.tk.".$new_line.$new_line;
+				$message.="Thanks playing with Kleidos!".$new_line;
+				$message.="Connect to http://www.kleidos.tk to continue the adventure.".$new_line.$new_line;
+				$message.="________________________".$new_line;
+				$message.="The guardians of Kleidos".$new_line;
+				$message.="guardians@kleidos.tk".$new_line;
+
+				try
+				{
+					if(!mail($to , $subject , $message, $header));
+				}	
+				catch (PDOException $e)
+				{
+					echo_debug("New user mail not sent");
+					die('Erreur : '.$e->getMessage());
+				}
+			}
+			
+		}
+		catch (PDOException $e)
+		{
+			die('Error : '.$e->getMessage());
+		}	
+		/*
+		*/
+	}
+	
 	//get email Notif frequency
 	function user_getEmailFrequency($bdd, $userID)
 	{
