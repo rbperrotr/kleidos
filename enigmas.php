@@ -39,15 +39,15 @@
 					echo_debug("ENIGMAS | analyse nb of days if good answer (nbdays=".$nbDays.")<br>");
 					if ($nbDays == 0)
 					{
-						echo "<a href='enigma.php?ref=".$enigma->getRef()."'><button class=\"enigmaButtonDoubleGold\" >".$enigma->getTitle()."</button></a><br />";
+						echo "<a href='enigma.php?ref=".$enigma->getRef()."'><button class=\"enigmaButtonDoubleGold\" title=\"Double gold coin answer: I got two hint codes for this.\">".$enigma->getTitle()."</button></a><br />";
 					}
 					elseif ($nbDays == 1)
 					{
-						echo "<a href='enigma.php?ref=".$enigma->getRef()."'><button class=\"enigmaButtonGold\" >".$enigma->getTitle()."</button></a><br />";
+						echo "<a href='enigma.php?ref=".$enigma->getRef()."'><button class=\"enigmaButtonGold\" title=\"Gold coin answer: I got one hint code for this.\">".$enigma->getTitle()."</button></a><br />";
 					}
 					elseif ($nbDays > 1)
 					{
-						echo "<a href='enigma.php?ref=".$enigma->getRef()."'><button class=\"enigmaButtonSilver\" >".$enigma->getTitle()."</button></a><br />";
+						echo "<a href='enigma.php?ref=".$enigma->getRef()."'><button class=\"enigmaButtonSilver\" title=\"Silver coin answer: I didn't get any hint code for this.\">".$enigma->getTitle()."</button></a><br />";
 					}
 					else
 					{

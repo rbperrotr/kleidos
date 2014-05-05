@@ -1,26 +1,66 @@
 ﻿<?php
 	
-	//Get all enigma
+	//Get all enigmas
+	//OLD
+	/*function enigma_getAllEnigmas($bdd)
+	{
+		$response = $bdd->query('SELECT * FROM enigma');
+		return $response;
+	}
+	*/
+	
+	
 	function enigma_getAllEnigmas($bdd)
 	{
-		$reponse = $bdd->query('SELECT * FROM enigma');
-		return $reponse;
+		$query = $bdd->prepare('SELECT * FROM enigma');
+		$query->execute(array(
+		));
+		
+		try
+		{
+			$nb_rows = $query->rowCount();
+		}
+		catch(Exception $e)
+		{
+			$nb_rows = 0;
+		}
+		echo_debug("enigma_getAllEnigmas | nbrows =".$nb_rows."<br/>");
+		$enigmas = array();
+		if($nb_rows > 0)
+		{
+			while ($data = $query->fetch())
+			{
+				$enigma = new Enigma($data['id'], $data['title'], $data['text'], $data['nbClues'], $data['publiDate'], $data['ref'], $data['picture'], $data['expected_answer'], $data['buy_clue']);
+				$enigmas[] = $enigma;
+			}
+		}
+		return $enigmas;
 	}
 	
 	//get only viewable enigmas
 	function enigma_getViewableEnigmas($bdd)
 	{
-		$reponse = enigma_getAllEnigmas($bdd);
+		$enigmas = enigma_getAllEnigmas($bdd);
 		
 		$today = date('Y-m-d');	
 		$today = new DateTime($today);
 		$today = $today->format('Ymd');
 		
-		$enigmas = array();
-		
-		while ($donnees = $reponse->fetch())
+		$viewableEnigmas = array();
+		foreach($enigmas as $enigma)
 		{
-			$enigma = new Enigma($donnees['id'], $donnees['title'], $donnees['text'], $donnees['nbClues'], $donnees['publiDate'], $donnees['ref'], $donnees['picture'], $donnees['expected_answer'], $donnees['buy_clue']);
+			$publi = (string)$enigma->getPubliDate();
+			$publi = new DateTime($publi);
+			$publi = $publi->format('Ymd');
+			if($today >= $publi)
+			{
+				$viewableEnigmas[] = $enigma;
+			}
+		}
+		/*OLD
+		while ($data = $response->fetch())
+		{
+			$enigma = new Enigma($data['id'], $data['title'], $data['text'], $data['nbClues'], $data['publiDate'], $data['ref'], $data['picture'], $data['expected_answer'], $data['buy_clue']);
 			$publi = (string)$enigma->getPubliDate();
 			$publi = new DateTime($publi);
 			$publi = $publi->format('Ymd');
@@ -30,14 +70,15 @@
 				$enigmas[] = $enigma;
 			}
 		}
+		*/
 		
-		return $enigmas;
+		return $viewableEnigmas;
 	}
 	
 	//returns TRUE if enigma already published
 	function enigma_isPublished($bdd, $EnigmaID)
 	{
-		$query = $bdd->prepare('SELECT publiDate FROM enigma WHERE EnigmaID = :ei');
+		$query = $bdd->prepare('SELECT publiDate FROM enigma WHERE ID = :ei');
 		$query->execute(array(
 				'ei' => $EnigmaID
 		));
@@ -45,7 +86,7 @@
 		$today = date('Y-m-d');	
 		$today = new DateTime($today);
 		$today = $today->format('Ymd');
-		
+		$isPublished = FALSE;
 		try
 		{
 			$nb_rows = $query->rowCount();
