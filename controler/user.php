@@ -3,7 +3,7 @@
 	//Confirm User password
 	function user_confirmPassword($bdd, $login, $tempPass)
 	{
-		echo_debug("USER | Start user_confirmPassword");
+		echo_debug("USER | Start user_confirmPassword<br>");
 		try
 		{
 			$reponse = $bdd->prepare('SELECT * FROM user WHERE login =:login');
@@ -19,7 +19,7 @@
 		while ($data = $reponse->fetch())
 		{
 			$user = new User($data['id'], $data['login'], $data['firstname'], $data['lastname'], $data['password'], $data['safeID'], $data['registrationdate']);	
-			echo_debug("USER | fetch user_confirmPassword");			
+			echo_debug("USER | fetch user_confirmPassword<br>");			
 		}
 		
 		if($tempPass == $user->getPassword())
@@ -30,7 +30,7 @@
 		{
 			return false;
 		}
-		echo_debug("USER | End user_confirmPassword");
+		echo_debug("USER | End user_confirmPassword<br>");
 	}
 	
 	//Get Full Name = firstname lastname
@@ -48,7 +48,7 @@
 		{
 			$nb_rows = 0;
 		}
-		echo_debug("User | get_FullName (nb rows=".$nb_rows.")");
+		echo_debug("User | get_FullName (nb rows=".$nb_rows.")<br>");
 		
 		if($nb_rows > 0)
 		{
@@ -67,6 +67,37 @@
 		return $fullname;
 	}
 	
+	//Get Login
+	function user_getLogin($bdd, $userID)
+	{
+		$userquery = $bdd->prepare('SELECT login FROM user WHERE id= :ui3');
+		$userquery->execute(array(
+				'ui3' => $userID
+		));
+		try
+		{
+			$nb_rows = $userquery->rowCount();
+		}
+		catch(Exception $e)
+		{
+			$nb_rows = 0;
+		}
+		echo_debug("User | get_Login (nb rows=".$nb_rows.")<br>");
+		
+		if($nb_rows > 0)
+		{
+			while ($data = $userquery->fetch())
+			{
+				$login = ($data['login']);
+				echo_debug("User | get_Login = ".$login."<br/>");
+			}
+		}
+		else
+		{
+			$login = "";
+		}
+		return $login;
+	}
 	
 	//Add User
 	function user_addUser($bdd, $login, $firstname, $lastname, $password, $safeID)
@@ -91,7 +122,7 @@
 			//email notifications 
 			if(!canemail())
 			{
-				echo_debug("New user mail not sent");
+				echo_debug("New user mail not sent<br>");
 			}
 			else
 			{
@@ -115,7 +146,7 @@
 				}	
 				catch (PDOException $e)
 				{
-					echo_debug("New user mail not sent");
+					echo_debug("New user mail not sent<br>");
 					die('Erreur : '.$e->getMessage());
 				}
 				
@@ -145,7 +176,7 @@
 				}	
 				catch (PDOException $e)
 				{
-					echo_debug("New user mail not sent");
+					echo_debug("New user mail not sent<br>");
 					die('Erreur : '.$e->getMessage());
 				}
 			}
@@ -162,12 +193,14 @@
 		$today = date("D M j G:i:s T Y");	//get today's date as a formatted string 
 		$today = new DateTime($today);		//transform string $today as a date variable
 		$today = $today->format("D M j G:i:s T Y");	//transform date variable into an object and set its dateformat
+		$fullname = user_getFullName($bdd, $userID);
+		$login = user_getLogin($bdd,$userID);
 		
 		echo_debug("today in user_changePassword = ".$today."<br>");
 				
 		try
 		{	
-			echo_debug("USER | user_changePassword for userID=".$userID."<br>");
+			echo_debug("USER | user_changePassword for userID=".$userID." fullname=".$fullname."<br>");
 			try
 			{
 				$query = $bdd->query("UPDATE user SET password=\"".$MD5password."\" WHERE id=".$userID);
@@ -182,7 +215,7 @@
 			//email notifications 
 			if(!canemail())
 			{
-				echo_debug("User pwd change user mail not sent");
+				echo_debug("User pwd change user mail not sent<br>");
 			}
 			else
 			{
@@ -195,9 +228,9 @@
 				$header.= "Content-Type: multipart/alternative;".$new_line." boundary=\"$boundary\"".$new_line;
 
 				$to="Guardians@kleidos.tk";
-				$subject="USER PASSWORD CHANGED: ".$firstname." ".$lastname;
+				$subject="USER PASSWORD CHANGED: ".$fullname;
 				$now=date('Y-m-d H:i:s');
-				$message="A user has changed is password on ".$now.$new_line;
+				$message="The user ".$fullname." has changed his/her password on ".$now.$new_line;
 
 				try
 				{
@@ -205,7 +238,7 @@
 				}	
 				catch (PDOException $e)
 				{
-					echo_debug("User password changed mail not sent");
+					echo_debug("User (".$fullname.") password changed mail not sent<br>");
 					die('Error : '.$e->getMessage());
 				}
 				
@@ -220,7 +253,7 @@
 				$to=$login;
 				$subject="Kleidos: password changed notification";
 				$now=date('Y-m-d H:i:s');
-				$message="Hello ".$firstname." ".$lastname.".".$new_line;
+				$message="Hello ".$fullname.".".$new_line;
 				$message.="You have changed your password on ".$now.$new_line.$new_line;
 				$message.="If you did not submit a password change, then send an email to guardians@kleidos.tk.".$new_line.$new_line;
 				$message.="Thanks playing with Kleidos!".$new_line;
@@ -235,7 +268,7 @@
 				}	
 				catch (PDOException $e)
 				{
-					echo_debug("New user mail not sent");
+					echo_debug("New user mail not sent<br>");
 					die('Erreur : '.$e->getMessage());
 				}
 			}
