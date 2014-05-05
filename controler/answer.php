@@ -64,9 +64,9 @@
 	function answer_already_answered($bdd, $enigmaID, $userID) 
 	{
 		echo_debug("ANSWER | Start answer_already_answered<br>");
-		echo_debug("ANSWER | answer_already_answered: EnigmaID=".$enigmaID.", UserID=".$userID.".<br>");SELECT * FROM `submitted_answers` WHERE 1
+		echo_debug("ANSWER | answer_already_answered: EnigmaID=".$enigmaID.", UserID=".$userID.".<br>");
 		
-		$query = $bdd->prepare('SELECT count(id) AS total FROM submitted_answers WHERE correct_answer='YES' AND enigma_id=:ei AND user_id=:ui');	
+		$query = $bdd->prepare('SELECT count(id) AS total FROM submitted_answers WHERE correct_answer="YES" AND enigma_id=:ei AND user_id=:ui');	
 		
 		$query->execute(array(
 				'ei' => $enigmaID,
@@ -205,7 +205,7 @@
 		SELECT DATEDIFF(MIN(submitted_answers.date_time),enigma.publidate) FROM submitted_answers, enigma WHERE submitted_answers.user_id=3 AND  submitted_answers.enigma_id=7 AND  submitted_answers.enigma_id=enigma.id AND  submitted_answers.answer=enigma.expected_answer
 		*/
 		echo_debug("ANSWER | Start function answer_nbDays_since_publication for enigmaid=".$enigmaID." and userid=".$userID."<br>");
-		$query = $bdd->prepare('SELECT DATEDIFF(MIN(submitted_answers.date_time),enigma.publidate) as nbDays FROM submitted_answers, enigma WHERE submitted_answers.user_id=:ui AND  submitted_answers.enigma_id=:ei AND  submitted_answers.enigma_id=enigma.id AND  submitted_answers.answer=enigma.expected_answer');
+		$query = $bdd->prepare('SELECT DATEDIFF(MIN(submitted_answers.date_time),enigma.publidate) 	AS nbDays FROM submitted_answers, enigma WHERE submitted_answers.user_id=:ui AND submitted_answers.enigma_id=:ei AND  submitted_answers.correct_answer="YES" AND submitted_answers.enigma_id=enigma.id');
 		$query->execute(array(
 				'ei' => $enigmaID,
 				'ui' => $userID
