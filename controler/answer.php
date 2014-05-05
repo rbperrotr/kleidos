@@ -18,12 +18,55 @@
 	}
 	
 	//Did I already answer to this enigma correctly?
-	function answer_already_answered($bdd, $enigmaID, $userID) 
+	function OLD_answer_already_answered($bdd, $enigmaID, $userID) 
 	{
 		echo_debug("ANSWER | Start answer_already_answered<br>");
 		echo_debug("ANSWER | answer_already_answered: EnigmaID=".$enigmaID.", UserID=".$userID.".<br>");
 		
 		$query = $bdd->prepare('SELECT count(submitted_answers.id) as total from submitted_answers, enigma where submitted_answers.enigma_ID=enigma.id and enigma.id=:ei and submitted_answers.answer=enigma.expected_answer and submitted_answers.user_id=:ui');	
+		
+		$query->execute(array(
+				'ei' => $enigmaID,
+				'ui' => $userID
+		));
+		try
+		{
+			$nb_rows = $query->rowCount();
+		}
+		catch(Exception $e)
+		{
+			$nb_rows = 0;
+		}
+		echo_debug("answer_already_answered | nbrows =".$nb_rows."<br/>");
+		if($nb_rows > 0)
+		{
+			while ($data = $query->fetch())
+			{
+				$total = ($data['total']);
+				echo_debug("answer_already_answered | number of good answer (total)=".$total."<br/>");
+			}
+			if($total > 0)
+			{
+				$answer = true;
+			}
+			else
+			{
+				$answer = false;
+			}
+		}
+		else
+		{
+			$answer = false;
+		}
+		echo_debug("ANSWER | answer_already_answered return ".$answer."<br>");
+		return $answer;
+	}
+	function answer_already_answered($bdd, $enigmaID, $userID) 
+	{
+		echo_debug("ANSWER | Start answer_already_answered<br>");
+		echo_debug("ANSWER | answer_already_answered: EnigmaID=".$enigmaID.", UserID=".$userID.".<br>");SELECT * FROM `submitted_answers` WHERE 1
+		
+		$query = $bdd->prepare('SELECT count(id) AS total FROM submitted_answers WHERE correct_answer='YES' AND enigma_id=:ei AND user_id=:ui');	
 		
 		$query->execute(array(
 				'ei' => $enigmaID,
