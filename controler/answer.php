@@ -243,7 +243,7 @@
 	//Saving user answer
 	function answer_saveAnswer($bdd, $enigmaID, $userID, $answer, $correct_answer)
 	{
-		echo_debug("function answer_saveAnswer");
+		echo_debug("function answer_saveAnswer<br>");
 		$query = $bdd->prepare('INSERT INTO submitted_answers (enigma_id, user_id, answer, date_time, correct_answer) VALUES (:ei, :ui, :ua, NOW(), :ca)');
 		$query->execute(array(
 				'ei' => $enigmaID,
@@ -272,7 +272,7 @@
 			$message.="Submitted answer ".$answer;
 			if(!canemail())
 			{
-				echo_debug("New answer email not sent from localhost"); //catch hostname local to avoid error on mail
+				echo_debug("New answer email not sent from localhost<br>"); //catch hostname local to avoid error on mail
 			}
 			else
 			{
@@ -282,7 +282,7 @@
 				}	
 				catch (PDOException $e)
 				{
-					echo_debug("New answer email not sent");
+					echo_debug("New answer email not sent<br>");
 					die('Erreur : '.$e->getMessage());
 				}
 			}

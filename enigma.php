@@ -77,7 +77,7 @@
 							if($answer->getText() == $u_answer)
 							{
 								$good_answer = true;
-								echo_debug("enigma | user answer = ".$u_answer."recognized as CORRECT<br/>");
+								echo_debug("enigma | user answer = ".$u_answer." recognized as CORRECT<br/>");
 							}
 						}
 						
@@ -99,7 +99,7 @@
 								if($today<clue_getClueOnePublicationDate($bdd, $enigma->getId(),1))
 								{
 									$nbcode=2;
-									echo_debug("ENIGMA | will give two codes");
+									echo_debug("ENIGMA | will give two codes<br>");
 									$code1 = code_getANewCode($bdd);
 									code_assignCode($bdd, $_SESSION['uid'], $enigma->getId(), $code1->getId());	
 									$code2 = code_getANewCode($bdd);
@@ -109,7 +109,7 @@
 								elseif($today<clue_getClueOnePublicationDate($bdd, $enigma->getId(),2))
 								{
 									$nbcode=1;
-									echo_debug("ENIGMA | will give one codes");
+									echo_debug("ENIGMA | will give one codes<br>");
 									$code1 = code_getANewCode($bdd);
 									code_assignCode($bdd, $_SESSION['uid'], $enigma->getId(), $code1->getId());	
 									echo "<article><div class=\"correct_answer\">Congratulations! <br/> The correct answer is:  <span class=\"strong_correct_answer\"> ".$enigma->getExpected_answer()."</span><br/> Thanks to this right answer you won a hint code: ".$code1->getText().".<br/> Keep it carefully as you may want to use it later. </div></article>";
@@ -118,7 +118,7 @@
 								{
 									$nbcode=0;
 									$congratulationMessage="";
-									echo_debug("ENIGMA | will not give any codes");
+									echo_debug("ENIGMA | will not give any codes<br>");
 									echo "<article><div class=\"correct_answer\">Congratulations! <br/> The correct answer is:  <span class=\"strong_correct_answer\"> ".$enigma->getExpected_answer()."</span><br/> Stay tuned to see new enigmas and get code by answering before hints are published.<br/></div></article>";
 								}
 								
@@ -132,7 +132,7 @@
 						}
 						else
 						{
-							echo_debug("enigma | user answer = ".$u_answer."NOT recognized as CORRECT<br/>");
+							echo_debug("enigma | user answer = ".$u_answer." NOT recognized as CORRECT<br/>");
 							answer_saveAnswer($bdd, $enigma->getId(), $_SESSION['uid'], $u_answer, 'NO');
 							echo "<article><div class=\"wrong_answer\">Sorry, this is not a good answer, try again.<br>You can submit up to 5 answers per hour.</div></article>";
 						}
