@@ -33,6 +33,17 @@
 				exit;
 			}
 		?>
+
+		<section>
+			<div>
+				<?php include('pages/admin_users.php');?>
+			</div>
+		</section>
+		<section>
+			<div>
+				<?php include('pages/admin_answers.php');?>
+			</div>
+		</section>
 		<section>
 		<h2>Manage DEBUG mode</h2>
 			<p>Debug mode allows debugging by displaying trace on the pages - don\'t keep it on</p>
@@ -104,17 +115,6 @@
 				Login: rbperrotr@gmail.com<br>
 				password = kleidos2014<br>
 			</p>
-		</section>
-		<section>
-			<div>
-				<?php include('pages/admin_users.php');?>
-			</div>
-		</section>
-		<section>
-			<div>
-				<?php include('pages/admin_answers.php');?>
-			</div>
-		</section>
-			
+		</section>			
 	</body>
 </html>

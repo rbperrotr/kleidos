@@ -34,7 +34,10 @@ function unhide(divID) {
 					echo ("<tr><td>".$auser->getid()."</td><td>".$auser->getfirstname()."</td><td>".$auser->getlastname()."</td><td>".$auser->getregistrationdate()."</tr>");
 				}
 		echo('</table></div>');
-		
+		echo('<h3>Email</h3>');
+		echo('<table><tr><td><br><form method="post" action="admin_email.php"><input type="hidden" name="action" value="open_email_test" /><input class="adminEmailButton" type="submit" value="Send test email"><br>Send a test email to the guardians.</form></td>');
+		echo('<td><br><form method="post" action="admin_email.php"><input type="hidden" name="action" value="open_email_allplayers" /><input class="adminEmailButton" type="submit" value="Send email to all players"><br>Send an email to all players.</form></td></tr></table>');
+				
 		$emails = admin_getallemails($bdd);
 		echo('<br><a href="javascript:unhide(\'UsersAllEmails\');">Display list of all emails / Hide</a><br>');
 		echo('This list is for the guardians only, some users can have requested to not receive email from other players. See list of public emails below.<br>');

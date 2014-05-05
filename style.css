@@ -97,7 +97,34 @@ input:-webkit-autofill:focus {
 	width: 60%;
 	padding-right: 0px;
 }
+.email_banner
+{
+	vertical-align: top;
+	padding-bottom: 10px;
+	margin-bottom: 20px;
+	border-top: 2px solid #FF8000;
+	border-bottom: 2px solid #FF8000;
+	height: 60px;
+	width: 100%;
+}
+.email_banner_left
+{
+	display: inline-block;
+	text-align: left;
+	vertical-align: center;
+	font-size: 1.2em;
+	width: 70%;
+}
 
+.email_banner_right
+{
+	display: inline-block;
+	text-align: right;
+	vertical-align: center;
+	font-size: 0.8em;
+	width: 29%;
+	padding-right: 0px;
+}
 .video_aside
 {
 	display: inline-block;
@@ -227,6 +254,28 @@ input:-webkit-autofill:focus {
 	
 }
 
+.adminEmailButton
+{
+	display: inline-block;
+	height: 35px;
+	width: 250px;
+	border-radius: 0px;
+	border-color:	#cccccc;
+	border-style: solid;
+	border-width: 1px;
+	font-size: 1.1em;
+	text-align: center;
+	vertical-align: bottom;
+	padding: 4px 6px 4px 6px;
+	margin-bottom: 10px;
+	margin-right: 5px;
+	color: #cccccc;
+	background-color: #151515;
+	text-decoration: none;
+	font-family: Tahoma;
+	
+}
+
 .enigmaButtonDoubleGold
 {
 	display: inline-block;
@@ -343,8 +392,17 @@ Button:hover
 	height: 22px;
 	padding: 4px 8px;
 	background: white;
-	//box-shadow: 0 0 0 0;
 }
+
+.formtextareainput
+{
+	font-family: "Segoe UI Light","Segoe UI Web Light","Segoe UI Web Regular","Segoe UI","Segoe UI Symbol","HelveticaNeue-Light","Helvetica Neue",Arial,sans-serif;
+	width: 600px;
+	height: 200px;
+	padding: 4px 8px;
+	background: white;
+}
+
 .bannertextinput
 {
 	font-family: "Segoe UI Light","Segoe UI Web Light","Segoe UI Web Regular","Segoe UI","Segoe UI Symbol","HelveticaNeue-Light","Helvetica Neue",Arial,sans-serif;

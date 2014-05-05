@@ -26,7 +26,7 @@ function unhide(divID) {
 			echo ("<tr>");
 			echo("<td style=\"white-space: nowrap\">".$ananswer->getEnigmaTitle()." | </td>");
 			echo("<td style=\"white-space: nowrap\">".$ananswer->getNbAnswers()."</td>");
-			echo("<td style=\"white-space: nowrap\"> | <b>".admin_getnbcorrectanswers($bdd, $ananswer->getEnigmaID())." correct(".number_format(100*(admin_getnbcorrectanswers($bdd, $ananswer->getEnigmaID())/$ananswer->getNbAnswers()))."%)</b></td>");
+			echo("<td style=\"white-space: nowrap\"> | ".admin_getnbcorrectanswers($bdd, $ananswer->getEnigmaID())." correct(".number_format(100*(admin_getnbcorrectanswers($bdd, $ananswer->getEnigmaID())/$ananswer->getNbAnswers()))."%)</td><td> | <b>".number_format(100*(admin_getnbcorrectanswers($bdd, $ananswer->getEnigmaID())/(admin_getnbusers($bdd)-3)))."% of players answered correctly</b></td>");
 			echo("</tr>");
 		}
 		
