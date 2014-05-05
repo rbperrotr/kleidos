@@ -5,6 +5,7 @@
 		private $enigmaID;
 		private $text;
 		private $date_time;
+		private $correct_answer;
 		
 		function Answer($n_id, $n_enigmaID, $n_text)
 		{
@@ -142,6 +143,16 @@
 		public function setNbAnswers($newNbAnswers)
 		{
 			$this->NbAnswers = $newNbAnswers;
+		}
+
+		public function getCorrectAnswer()
+		{
+			return $this->correctAnswer;
+		}
+		
+		public function setCorrectAnswer($newCorrectAnswer)
+		{
+			$this->CorrectAnswer = $newCorrectAnswer;
 		}
 		
 	}

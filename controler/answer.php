@@ -198,14 +198,15 @@
 	}
 	
 	//Saving user answer
-	function answer_saveAnswer($bdd, $enigmaID, $userID, $answer)
+	function answer_saveAnswer($bdd, $enigmaID, $userID, $answer, $correct_answer)
 	{
 		echo_debug("function answer_saveAnswer");
-		$query = $bdd->prepare('INSERT INTO submitted_answers (enigma_id, user_id, answer, date_time) VALUES (:ei, :ui, :ua, NOW())');
+		$query = $bdd->prepare('INSERT INTO submitted_answers (enigma_id, user_id, answer, date_time, correct_answer) VALUES (:ei, :ui, :ua, NOW(), :ca)');
 		$query->execute(array(
 				'ei' => $enigmaID,
 				'ui' => $userID,
-				'ua' => $answer
+				'ua' => $answer,
+				'ca' => $correct_answer
 		));
 		//prepare email for notification to the guardians
 		

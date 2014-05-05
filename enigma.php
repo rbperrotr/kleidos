@@ -70,7 +70,6 @@
 					//if (answer_get_time_box_previous_answers($bdd, $enigma->getId(), $_SESSION['uid'] == true))
 					//Test to fix the issue on the nb of try, is the closing bracket on the right place? RBP suspect NO, if this is correct the test agains true is useless
 					{
-						//answer_saveAnswer($bdd, $enigma->getId(), $_SESSION['uid'], $u_answer);
 						
 						$good_answer = false;
 						foreach($answers as $answer)
@@ -90,7 +89,7 @@
 							}
 							else
 							{
-								answer_saveAnswer($bdd, $enigma->getId(), $_SESSION['uid'], $u_answer);
+								answer_saveAnswer($bdd, $enigma->getId(), $_SESSION['uid'], $u_answer, 'YES');
 								// if $now<publishedDate clue 1 give 2 codes
 								// if $now<publishedDate clue#2 give 1 code
 								// else don't give any code
@@ -134,7 +133,7 @@
 						else
 						{
 							echo_debug("enigma | user answer = ".$u_answer."NOT recognized as CORRECT<br/>");
-							answer_saveAnswer($bdd, $enigma->getId(), $_SESSION['uid'], $u_answer);
+							answer_saveAnswer($bdd, $enigma->getId(), $_SESSION['uid'], $u_answer, 'NO');
 							echo "<article><div class=\"wrong_answer\">Sorry, this is not a good answer, try again.<br>You can submit up to 5 answers per hour.</div></article>";
 						}
 					}
