@@ -239,7 +239,7 @@
 			FROM submitted_answers, enigma 
 			WHERE 
 				submitted_answers.enigma_id=enigma.id AND 
-				enigma.expected_answer=submitted_answers.answer AND
+				submitted_answers.correct_answer="YES" AND
 				submitted_answers.user_id!=3 AND
 				submitted_answers.user_id!=4 AND
 				submitted_answers.user_id!=5
@@ -247,7 +247,7 @@
 		WHERE A.enigma_id = 10
 		*/
 		
-		$query = $bdd->prepare('SELECT nb_answers as nbCorrectAnswers FROM (SELECT submitted_answers.enigma_id as enigma_id, enigma.title as enigma_title, count(submitted_answers.id) as nb_answers FROM submitted_answers, enigma WHERE submitted_answers.enigma_id=enigma.id AND enigma.expected_answer=submitted_answers.answer AND submitted_answers.user_id!=3 AND submitted_answers.user_id!=4 AND submitted_answers.user_id!=5 GROUP BY submitted_answers.enigma_id)as A WHERE A.enigma_id = :ei');
+		$query = $bdd->prepare('SELECT nb_answers as nbCorrectAnswers FROM (SELECT submitted_answers.enigma_id as enigma_id, enigma.title as enigma_title, count(submitted_answers.id) as nb_answers FROM submitted_answers, enigma WHERE submitted_answers.enigma_id=enigma.id AND submitted_answers.correct_answer="YES" AND submitted_answers.user_id!=3 AND submitted_answers.user_id!=4 AND submitted_answers.user_id!=5 GROUP BY submitted_answers.enigma_id)as A WHERE A.enigma_id = :ei');
 		$query->execute(array(
 			'ei' => $enigma_id
 		));
