@@ -78,13 +78,13 @@
 			}
 			else
 			{
-				$canemail=  FALSE;
+				$canemail=FALSE;
 				echo_debug("Do not send email notif");
 			}
 		}
 		else
 		{
-			$canemail=  FALSE;
+			$canemail=FALSE;
 		}
 		return $canemail;
 	}
@@ -95,13 +95,13 @@
 		{
 			if($_SESSION['ANSWERS_NOTIF']==1)
 			{
-				$notifyOnEachAnswer=  TRUE;
-				echo_debug("Notification on each answer is ON");
+				$notifyOnEachAnswer=TRUE;
+				echo_debug("Notification on each answer is ON<br>");
 			}
 			else
 			{
-				$notifyOnEachAnswer=  FALSE;
-				echo_debug("Notification on each answer is ON");
+				$notifyOnEachAnswer=FALSE;
+				echo_debug("Notification on each answer is OFF<br>");
 			}
 		}
 		else
