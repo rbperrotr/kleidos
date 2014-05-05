@@ -251,38 +251,41 @@
 				'ua' => $answer,
 				'ca' => $correct_answer
 		));
-		//prepare email for notification to the guardians
 		
-		$fullname = user_getFullName($bdd, $userID);
-		
-		$new_line = "\r\n";
-		$boundary = "-----=".md5(rand());
-		$header = "From: \"The guardians\"<guardians@kleidos.tk>".$new_line;
-		$header.= "Reply-to: \"The guardians\" <guardians@kleidos.tk>".$new_line;
-		$header.= "MIME-Version: 1.0".$new_line;
-		$header.= "Content-Type: multipart/alternative;".$new_line." boundary=\"$boundary\"".$new_line;
+		if(notifyOnEachAnswer())
+		{
+			//prepare email for notification to the guardians
+			
+			$fullname = user_getFullName($bdd, $userID);
+			
+			$new_line = "\r\n";
+			$boundary = "-----=".md5(rand());
+			$header = "From: \"The guardians\"<guardians@kleidos.tk>".$new_line;
+			$header.= "Reply-to: \"The guardians\" <guardians@kleidos.tk>".$new_line;
+			$header.= "MIME-Version: 1.0".$new_line;
+			$header.= "Content-Type: multipart/alternative;".$new_line." boundary=\"$boundary\"".$new_line;
 
-		$to="Guardians@kleidos.tk";
-		$subject="NEW ANSWER submitted by ".$fullname;
-		$now=date('Y-m-d H:i:s');
-		$message=$fullname." has submitted an answer for enigma ".$enigmaID.$now.$new_line;
-		$message.="Submitted answer ".$answer;
-		if(!canemail())
-		{
-			echo_debug("New answer email not sent from localhost"); //catch hostname local to avoid error on mail
-		}
-		else
-		{
-			try
+			$to="Guardians@kleidos.tk";
+			$subject="NEW ANSWER submitted by ".$fullname;
+			$now=date('Y-m-d H:i:s');
+			$message=$fullname." has submitted an answer for enigma ".$enigmaID.$now.$new_line;
+			$message.="Submitted answer ".$answer;
+			if(!canemail())
 			{
-				if(!mail($to , $subject , $message, $header));
-			}	
-			catch (PDOException $e)
+				echo_debug("New answer email not sent from localhost"); //catch hostname local to avoid error on mail
+			}
+			else
 			{
-				echo_debug("New answer email not sent");
-				die('Erreur : '.$e->getMessage());
+				try
+				{
+					if(!mail($to , $subject , $message, $header));
+				}	
+				catch (PDOException $e)
+				{
+					echo_debug("New answer email not sent");
+					die('Erreur : '.$e->getMessage());
+				}
 			}
 		}
-
 	}
 ?>

@@ -1,4 +1,4 @@
-<script type="text/javascript">
+	<script type="text/javascript">
 function unhide(divID) {
     var item = document.getElementById(divID);
     if (item) {
@@ -65,4 +65,28 @@ function unhide(divID) {
 		
 		echo("</table></div>");
 	?>
+	<h3>Notification to the guardians on all answers</h3>
+	<form method="post" action="index.php">
+	<p>
+		<?php
+			if(isset($_SESSION['ANSWERS_NOTIF']))
+			{
+				if($_SESSION['ANSWERS_NOTIF']==1)
+				{
+					echo "<input type=\"checkbox\" name=\"checkbox_answers_notif\" id=\"checkbox_answers_notif\" checked=\"checked\"/> <label for=\"checkbox_answers_notif\">Enabled</label>";
+				}
+				else{
+					echo "<input type=\"checkbox\" name=\"checkbox_answers_notif\" id=\"checkbox_answers_notif\"/> <label for=\"checkbox_answers_notif\">Enabled</label>";
+				}
+			}
+			else
+			{
+				$_SESSION['ANSWERS_NOTIF']=0;
+				echo "<input type=\"checkbox\" name=\"checkbox_answers_notif\" id=\"checkbox_answers_notif\"/> <label for=\"checkbox_answers_notif\">Enabled</label>";
+			}
+		?>
+	</p>
+	<input type="hidden" name="action" value="answers_notif" />
+	<input class="stdButton" type="submit" value="Submit"/>
+	</form>
 </section>

@@ -88,4 +88,26 @@
 		}
 		return $canemail;
 	}
+	
+	function notifyOnEachAnswer()
+	{
+		if(isset($_SESSION['ANSWERS_NOTIF']))
+		{
+			if($_SESSION['ANSWERS_NOTIF']==1)
+			{
+				$notifyOnEachAnswer=  TRUE;
+				echo_debug("Notification on each answer is ON");
+			}
+			else
+			{
+				$notifyOnEachAnswer=  FALSE;
+				echo_debug("Notification on each answer is ON");
+			}
+		}
+		else
+		{
+			$notifyOnEachAnswer=  TRUE;
+		}
+		return $notifyOnEachAnswer;
+	}
 ?>
