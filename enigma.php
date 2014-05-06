@@ -67,10 +67,7 @@
 					
 					echo_debug("enigma | user answer = ".$u_answer."<br/>");
 					if (answer_get_time_box_previous_answers($bdd, $enigma->getId(), $_SESSION['uid']))
-					//if (answer_get_time_box_previous_answers($bdd, $enigma->getId(), $_SESSION['uid'] == true))
-					//Test to fix the issue on the nb of try, is the closing bracket on the right place? RBP suspect NO, if this is correct the test agains true is useless
 					{
-						
 						$good_answer = false;
 						foreach($answers as $answer)
 						{
@@ -90,7 +87,7 @@
 							else
 							{
 								answer_saveAnswer($bdd, $enigma->getId(), $_SESSION['uid'], $u_answer, 'YES');
-								// if $now<publishedDate clue 1 give 2 codes
+								// if $now<publishedDate clue#1 give 2 codes
 								// if $now<publishedDate clue#2 give 1 code
 								// else don't give any code
 								$today = date('Y-m-d');	
@@ -121,13 +118,6 @@
 									echo_debug("ENIGMA | will not give any codes<br>");
 									echo "<article><div class=\"correct_answer\">Congratulations! <br/> The correct answer is:  <span class=\"strong_correct_answer\"> ".$enigma->getExpected_answer()."</span><br/> Stay tuned to see new enigmas and get code by answering before hints are published.<br/></div></article>";
 								}
-								
-								/*
-								$code = code_getANewCode($bdd);
-								code_assignCode($bdd, $_SESSION['uid'], $enigma->getId(), $code->getId());
-								
-								echo "<article><div class=\"correct_answer\">Congratulations! <br/> The correct answer is:  <span class=\"correct_answer\"> ".$enigma->getExpected_answer()."</span><br/> Thanks to this right answer you won a hint code: ".$code->getText().".<br/> Keep it carefully as you may want to use it later. </div></article>";
-								*/
 							}
 						}
 						else

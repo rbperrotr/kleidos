@@ -80,7 +80,7 @@
 	}
 	
 	/**********************************************************************************************
-	 * Return the list of clue ready for publication for a given EnigmaID
+	 * Return the list of clues ready for publication based on date for a given EnigmaID
 	 **********************************************************************************************/
 	function clue_getCluesToPublish ($bdd, $enigmaID)
 	{
