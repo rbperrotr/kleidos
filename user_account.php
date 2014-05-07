@@ -161,7 +161,7 @@
 		<p><strong>
 		<?php
 			//list all codes available
-			$codeText = code_assignedcodes($bdd, $_SESSION['uid']);
+			$codeText = code_assignedCodesByUser($bdd, $_SESSION['uid']);
 			
 			foreach ($codeText as $code)
 				{
