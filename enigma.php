@@ -132,6 +132,43 @@
 						echo "<article><div class=\"wrong_answer\">Sorry, you have already submitted 5 answers in the last hour, please try again later.<br>You can submit up to 5 answers per hour.</div></article>";
 					}
 				}
+				elseif(isset($_POST['cluecode']))
+				{
+					$userID=$_SESSION['uid'];
+					echo_debug("ENIGMA | Start buy clue<br>");
+					$codetxt = htmlspecialchars($_POST['cluecode']);
+					echo_debug("ENIGMA BUY CLUE | for enigmaID=".$enigma->getID()." userID=".$userID." with code=".$codetxt."<br>");
+					//1-get codeID from codeText
+					//2-check code exists
+					//3-check code ID belongs to the user
+					//4-check code ID is available
+					//5-buy a clue for the codeID
+					
+					//1-get codeID from codeText
+					echo_debug("ENIGMA BUY CLUE | Check codeText by searching for the associated code ID <br>");
+					$codeID = code_getcodeID($bdd, $codetxt);
+					//2-check code exists
+					if($codeID==0)
+					{
+						echo '<div class=\"error_message\"><strong>Invalid code, please check on MyAccount page.</strong></div>';
+					}
+					elseif(!code_checkCodeUser($bdd, $codeID, $userID)) //3-check code ID belongs to the user
+					{
+						echo '<div class=\"error_message\"><strong>Invalid code, this code does not belongs to you, please check on MyAccount page.</strong></div>';
+					}
+					elseif(code_CodeStatus($bdd, $codeID)=='Used') //4-check code ID is available
+					{
+						echo '<div class=\"error_message\"><strong>Invalid code, this code has been used already, please check on MyAccount page.</strong></div>';
+					}
+					elseif(code_CodeStatus($bdd, $codeID)=='New')
+					{
+						echo '<div class=\"error_message\"><strong>Invalid code, please check on MyAccount page.</strong></div>';
+					}
+					//5-buy a clue for the codeID
+					//OLD from MD PoC code_useCode($bdd, $codeID, $_SESSION['uid']);
+					code_buyAHint($bdd, $codeID, $enigma->getID(), $userID);
+					
+				}
 			?>
 		</article>
 		
@@ -147,7 +184,7 @@
 				*/
 			?>
 			<?php
-				/* replace code from Matthieu D above, but does not yet manage the hint bought by a user with code */
+				//Display all codes ready published for the enigma
 				$clues = clue_getCluesToPublish ($bdd, $enigma->getId());
 				$nbclues = count($clues);
 				if($nbclues>0)
@@ -167,8 +204,21 @@
 					{
 						echo "<p><li>".$clue->getText()."</li></p>";
 					}
+					
+				}
+				//Display all additional codes not yet published for the enigma but bought with codes
+				$boughtClues = clue_getCluesBoughtByUserNotYetPublished($bdd, $enigma->getId(), $_SESSION['uid']);
+				$nbBoughtClues = count($boughtClues);
+				if($nbBoughtClues>0)
+				{
+					foreach($boughtClues as $aBoughtclue)
+					{
+						echo '<p><li>'.$aBoughtclue.'<span class="correct_answer"> (<img src="resources/done_gold.png" style="width:20px; vertical-align:middle;">not yet public, bought with a code you won).</span></li></p>';
+					}
 					echo "</ul>";
 				}
+				if($nbclues+$nbBoughtClues >0)
+					echo "</ul>";
 			?>
 			<?php
 			if ($enigma->getBuyClue()==true)

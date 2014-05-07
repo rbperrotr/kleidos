@@ -1,6 +1,6 @@
 ﻿<?php
 	
-	//Get answer from 1 question
+	//Get list of possible answers for an enigma 
 	function answer_getEnigmaAnswer($enigmaID, $bdd)
 	{
 		echo_debug("answer_getEnigmaAnswer for enigmaID=".$enigmaID."<br>");

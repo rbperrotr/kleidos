@@ -7,9 +7,10 @@
 		private $userID;
 		private $clueID;
 		private $status;
+		private $assignedDate;
 		private $usedDate;
 		
-		function Code($n_id,$n_text, $n_enigmaID, $n_userID, $n_clueID, $n_status, $n_usedDate)
+		function Code($n_id,$n_text, $n_enigmaID, $n_userID, $n_clueID, $n_status, $n_assignedDate, $n_usedDate)
 		{
 			$this->id = $n_id;
 			$this->text = $n_text;
@@ -17,6 +18,7 @@
 			$this->userID = $n_userID;
 			$this->clueID = $n_clueID;
 			$this->status = $n_status;
+			$this->assignedDate = $n_assignedDate;
 			$this->usedDate = $n_usedDate;
 		}
 		
@@ -88,6 +90,16 @@
 		public function setUsedDate($newUsedDate)
 		{
 			$this->usedDate = $newUsedDate;
+		}
+		
+		public function getAssignedDate()
+		{
+			return $this->AssignedDate;
+		}
+		
+		public function setAssignedDate($newAssignedDate)
+		{
+			$this->AssignedDate = $newAssignedDate;
 		}
 	}
 	

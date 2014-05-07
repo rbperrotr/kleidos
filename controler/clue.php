@@ -32,6 +32,30 @@
 		echo_debug("CLUE | End function clue_getCluesfromEnigma<br>");
 	}
 	
+	//Get list of bought clues for a given enigmaID and userID
+	function clue_getCluesBoughtByUserNotYetPublished($bdd, $enigmaID, $userID)
+	{
+		try
+		{  
+			$response = $bdd->prepare('SELECT clue.text FROM code, clue WHERE code.userID=:ui AND code.enigmaID=:ei AND code.status="Used" AND code.clueID=clue.id AND clue.publishedDate>now() ORDER BY clue.sortID');
+			$response->execute(array(
+				'ui' => $userID,
+				'ei' => $enigmaID
+			));
+		}	
+		catch (Exception $e)
+		{
+			die('Error : '.$e->getMessage());
+		}
+		
+		$clue_list = array();
+		while ($data = $response->fetch())
+		{
+			$clue = $data['text'];
+			$clue_list[] = $clue;
+		}
+		return $clue_list;
+	}
 	
 	function clue_getCluesofUser($bdd, $enigmaID, $userID, $clues)
 	{
