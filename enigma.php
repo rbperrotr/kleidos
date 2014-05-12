@@ -142,6 +142,7 @@
 					//2-check code exists
 					//3-check code ID belongs to the user
 					//4-check code ID is available
+					//5-check a hint is available for the current enigma 
 					//5-buy a clue for the codeID
 					
 					//1-get codeID from codeText
@@ -154,7 +155,7 @@
 					}
 					elseif(!code_checkCodeUser($bdd, $codeID, $userID)) //3-check code ID belongs to the user
 					{
-						echo '<div class=\"error_message\"><strong>Invalid code, this code does not belongs to you, please check on MyAccount page.</strong></div>';
+						echo '<div class=\"error_message\"><strong>Invalid code, this code does not belong to you, please check on MyAccount page.</strong></div>';
 					}
 					elseif(code_CodeStatus($bdd, $codeID)=='Used') //4-check code ID is available
 					{
@@ -164,9 +165,17 @@
 					{
 						echo '<div class=\"error_message\"><strong>Invalid code, please check on MyAccount page.</strong></div>';
 					}
-					//5-buy a clue for the codeID
+					//6-buy a clue for the codeID
 					//OLD from MD PoC code_useCode($bdd, $codeID, $_SESSION['uid']);
-					code_buyAHint($bdd, $codeID, $enigma->getID(), $userID);
+					elseif(code_buyAHint($bdd, $codeID, $enigma->getID(), $userID)==-1)
+					{
+						echo_debug('ENIGMA BUY CLUE | No hint bought');
+						echo '<div class=\"error_message\"><strong>Your code is valid but there is currently no hint to buy for this enigma.</strong></div>';
+					}
+					else
+					{
+						echo_debug('ENIGMA BUY CLUE | Hint bought');
+					}
 					
 				}
 			?>
@@ -202,7 +211,7 @@
 					
 					foreach($clues as $clue)
 					{
-						echo "<p><li>".$clue->getText()."</li></p>";
+						echo "<li><span class='enigmaHint'>".$clue->getText()."</span></li>";
 					}
 					
 				}
@@ -213,7 +222,7 @@
 				{
 					foreach($boughtClues as $aBoughtclue)
 					{
-						echo '<p><li>'.$aBoughtclue.'<span class="correct_answer"> (<img src="resources/done_gold.png" style="width:20px; vertical-align:middle;">not yet public, bought with a code you won).</span></li></p>';
+						echo '<li><span class="enigmaHint">'.$aBoughtclue.'</span><span class="correct_answer"> (<img src="resources/done_gold.png" style="width:20px; vertical-align:middle;">not yet public, bought with a code you won).</span></li>';
 					}
 					echo "</ul>";
 				}

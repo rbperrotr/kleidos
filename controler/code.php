@@ -108,6 +108,9 @@
 	function code_buyAHint($bdd, $codeID, $enigmaID, $userID)
 	{
 		//Check on CodeID are ALREADY DONE (Code ID belongs to the user, CodeID is available (Status=Assigned)
+		//return 1 if hint bought else return -1 if error or no hint to buy
+		$returnCode = -1;
+		
 		echo_debug("CODE buyAHint | Start<br>");
 		//identify the first clue not yet published
 		//update the codeID with enigmaID, clueID, Status, UsedDate
@@ -163,10 +166,11 @@
 		}
 		
 		
+		
 		//update the codeID with enigmaID, clueID, Status, UsedDate
-		echo_debug("CODE buyAHint | Update Code with CodeID=".$codeID."(enigmaID=".$enigmaID.", Status=Used, usedDate=Now(), clueID=".$clueID.")<br>");
 		if($clueID!=0)
 		{
+			echo_debug("CODE buyAHint | Update Code with CodeID=".$codeID."(enigmaID=".$enigmaID.", Status=Used, usedDate=Now(), clueID=".$clueID.")<br>");
 			try
 			{
 				$query = $bdd->query('UPDATE code SET status = "Used", enigmaID='.$enigmaID.', clueID='.$clueID.', usedDate=NOW() WHERE code.id ='.$codeID);
@@ -175,8 +179,13 @@
 			{
 				die('Error : '.$e->getMessage());
 			}
+			$returnCode = 1;
+		}
+		else{
+			echo_debug("CODE buyAHint | No Hint to buy");
 		}
 		echo_debug("CODE buyAHint | End");
+		return $returnCode;
 	}
 	
 	//Use a code to buy a clue
