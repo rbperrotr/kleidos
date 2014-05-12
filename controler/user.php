@@ -16,21 +16,30 @@
 			die('Error : '.$e->getMessage());
 		}
 		
+		$user=null;
 		while ($data = $reponse->fetch())
 		{
 			$user = new User($data['id'], $data['login'], $data['firstname'], $data['lastname'], $data['password'], $data['safeID'], $data['registrationdate']);	
 			echo_debug("USER | fetch user_confirmPassword<br>");			
 		}
-		
-		if($tempPass == $user->getPassword())
+		if($user!=null)
 		{
-			return $user;
+			if($tempPass == $user->getPassword())
+			{
+				echo_debug("USER | End user_confirmPassword - User OK<br>");
+				return $user;
+			}
+			else
+			{
+				echo_debug("USER | End user_confirmPassword - User Unknown<br>");
+				return false;
+			}
 		}
 		else
 		{
+			echo_debug("USER | End user_confirmPassword - User Unknown<br>");
 			return false;
 		}
-		echo_debug("USER | End user_confirmPassword<br>");
 	}
 	
 	//Get Full Name = firstname lastname

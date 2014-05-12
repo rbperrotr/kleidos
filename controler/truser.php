@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 	
 	//Get all trusers
 	function truser_getAllTRUsers($bdd)
@@ -110,5 +110,17 @@
 			echo_debug("TRUSER | email and safeID not found");
 			return FALSE;
 		}
+	}
+
+	function truser_check_email_compliance($bdd, $email)
+	{
+		$truie=truser_getTRUserfromemail($bdd, $email);
+		if($truie!=-1)
+		{
+			echo_debug("TRUSER | email OK");
+			return TRUE;
+		}
+		else
+			return FALSE;
 	}
 ?>

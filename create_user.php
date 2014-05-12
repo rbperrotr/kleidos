@@ -30,7 +30,7 @@
 			<div class="formtextinputlabel">First name*</div><input class="formtextinput" type="text" name="fname"><br>
 			<div class="formtextinputlabel">Last name*</div><input class="formtextinput" type="text" name="lname"><br>
 			<div class="formtextinputlabel">Create password*</div><input class="formtextinput" type="password" name="pwd"><span class="formtextinputlabel">  Re-enter password*</span><input class="formtextinput" type="password" name="pwd2"><br>
-			<div class="formtextinputlabel">Safe ID*</div><input class="formtextinput" type="text" name="safe"><br>
+			<!--<div class="formtextinputlabel">Safe ID*</div><input class="formtextinput" type="text" name="safe"><br>-->
 			<br>
 			<input type="hidden" name="action" value="create_user"/>
 			<input class="stdButton" type="submit" value="Submit"/>
@@ -45,8 +45,9 @@
 		<br>
 		* marks required fields
 		<br>
-		Please note that you are expected to sign up with your Thomson Reuters email address and associated SAFE ID.<br>
-		All accounts not compliant with those rules will be deleted. Do not use your SafeID password as it it not linked nor as secure.<br>
+		Please note that you are expected to sign up with your Thomson Reuters email address.<br>
+		All accounts not compliant with those rules will be deleted. <br>
+		This game is primary targeting Unified Platform Group, if you are not part of UPG, you can request an account by contactint the Gardians. 
 		If you have trouble signing in, please contact the <a href="mailto: guardians@kleidos.tk">guardians</a>.<br>
 		<?php
 				includeFooter();
