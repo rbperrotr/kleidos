@@ -38,7 +38,8 @@ input:-webkit-autofill {
 input:-webkit-autofill:focus {
     -webkit-box-shadow: /*your box-shadow*/,0 0 0 50px white inset;
     -webkit-text-fill-color: #333;
-}  
+}
+  
 
 #wrapper
 {
@@ -346,6 +347,11 @@ input:-webkit-autofill:focus {
 	background-color: #151515;
 	text-decoration: none;
 	font-family: Tahoma;
+}
+
+.enigmaHint
+{
+	line-height: 15px;
 }
 
 Button:hover
