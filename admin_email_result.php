@@ -50,10 +50,10 @@
 					if(isset($_POST['admin_email_subject']) && isset($_POST['admin_email_message']))
 					{
 						$admin_email_subject = htmlspecialchars($_POST['admin_email_subject']);
-						$admin_email_message = nl2br(htmlspecialchars($_POST['admin_email_message']));
+						$admin_email_message = nl2br(($_POST['admin_email_message']));
 						echo_debug ("ADMIN EMAIL | subject: ".$admin_email_subject.".<br>");
 						echo_debug ("ADMIN EMAIL | message _______________________________________________________________ <br>");
-						echo_debug ($admin_email_message);
+						echo_debug (htmlentities($admin_email_message)."<br");
 						echo_debug ("ADMIN EMAIL | message _______________________________________________________________ <br>");
 						
 						//check subject and message not empty else return error
@@ -97,13 +97,17 @@
 							
 							//prepare HTML message with a 600px table, a header row, a message row including a signature and a footer row with link to kleidos
 							$message='<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" ><head><meta http-equiv="Content-Type" content="text/html; charset="utf-8"; /><link rel="stylesheet" href="http://www.kleidos.tk/style.css" /></head>'.$new_line;
-							$message.='<body><table width=600px style="border-top: 2px solid #FF8000; border-bottom: 2px solid #FF8000; padding:7px;"><tr>	<td style="text-align:left; width=500px;"><strong>Message from the Guardians of Kleidos</strong></td><td><img src="http://www.kleidos.tk/resources/small logo.png" height="55"/></td></tr></table>'.$new_line;
-							$message.='<table width=600px style="vertical-align:top;"><tr><td><h1>';
+							$message.='<table style="width:600px; "><tr><td>';
+							$message.='<body><table style="width: 100%; border-top: 2px solid #FF8000; border-bottom: 2px solid #FF8000; padding:7px;"><tr>	<td style="text-align:left; width=500px;"><strong>Message from the Guardians of Kleidos</strong></td><td><img src="http://www.kleidos.tk/resources/small logo.png" height="55"/></td></tr></table>'.$new_line;
+							
+							$message.='<table style="width: 100%; vertical-align:top;"><tr><td><h1>';
 							$message.=$admin_email_subject;
 							$message.='</h1></td></tr><tr><td>';
 							$message.=$admin_email_message;
 							$message.='<br><br>Connect to http://www.kleidos.tk to continue the adventure.</td></tr></table>'.$new_line;
-							$message.='<br><table width=600px style="border-top: 1px solid #FF8000; border-bottom: 1px solid #FF8000; padding:2px; vertical-align:center;"><tr><td style="text-align:left; width=500px;"><a href="mailto:guardians@kleidos.tk">Contact the guardians</a>.</td><td style="text-align:right"><a href="http://www.kleidos.tk">kleidos.tk</a></td></tr></table></div></body>'.$new_line.$new_line;
+							$message.='<br><table style="width: 100%; border-top: 1px solid #FF8000; border-bottom: 1px solid #FF8000; padding:2px; vertical-align:center;"><tr><td style="text-align:left; width=500px;"><a href="mailto:guardians@kleidos.tk">Contact the guardians</a>.</td><td style="text-align:right"><a href="http://www.kleidos.tk">kleidos.tk</a></td></tr></table>';
+							$message.='</td></tr></table>';
+							$message.='</body>'.$new_line.$new_line;
 							
 							echo_debug("ADMIN EMAIL | To:".$to."<br>");
 							echo_debug("ADMIN EMAIL | Bcc:".$bcc."<br>");
