@@ -80,7 +80,13 @@
 						
 						if($good_answer == true)
 						{
-							if(answer_already_answered($bdd, $enigma->getId(), $_SESSION['uid']))
+							if($enigma->getRef()=="PRAEPO")
+								{
+									echo_debug("Time to conclude<br>");
+									//include("pages/praepossum.php");
+									echo ('<script type="text/javascript">window.open("./pages/praepossum.php", "_self")</script>');
+								}
+							elseif(answer_already_answered($bdd, $enigma->getId(), $_SESSION['uid']))
 							{
 								echo "you already answered this enigma!<br/> As a reminder the correct answer is <span class=\"correct_answer\">".$enigma->getExpected_answer()."</span><br>";
 							}
@@ -182,16 +188,6 @@
 		</article>
 		
 		<section>
-			<?php 
-				/* Code from Matthieu to display hints
-				$clues = clue_getCluesfromEnigma($bdd, $enigma->getId());
-				$uClues = clue_getCluesofUser($bdd, $enigma->getId(), $_SESSION['uid'], $clues);
-				foreach($uClues as $uClue)
-				{
-					echo "<br />".$uClue->getText()."<br />";
-				}
-				*/
-			?>
 			<?php
 				//Display all codes ready published for the enigma
 				$clues = clue_getCluesToPublish ($bdd, $enigma->getId());
