@@ -483,3 +483,40 @@ strong
 {
 	display: block;
 }
+
+
+span.E14:hover 
+{
+	text-decoration: none; 
+	z-index: 6;
+}
+span.E14 span 
+{
+	position: absolute; 
+	left: -9999px;
+	margin: 20px 0 0 0px; 
+	padding: 3px 3px 3px 3px;
+	border-style:solid; 
+	border-color:black; 
+	border-width:1px; 
+	z-index: 6;
+}
+span.E14:hover span 
+{
+	left: 2%; 
+	background: #ffffff;
+	color: #cccccc;
+	margin: 20px 0 0 450px; 
+	background: #555555; 
+	z-index:6;
+} 
+span.E14 span 
+{
+	position: absolute; 
+	left: -9999px;
+	margin: 4px 0 0 0px; 
+	padding: 3px 3px 3px 3px; 
+	border-style:solid; 
+	border-color:black; 
+	border-width:0px;
+}
