@@ -44,6 +44,10 @@
 									$_SESSION['login'] = $user->getFirstName();
 									$_SESSION['uid'] = $user->getId();
 								}
+								else
+								{
+									echo '<div class=\"error_message\"><strong>Account unknown, please check password or sign-up.</strong></div>';
+								}
 							}
 						}
 						elseif(htmlspecialchars($_POST['action']) == "debug_mode")
@@ -89,14 +93,13 @@
 						{
 							echo_debug("INDEX | go create_user script<br>");
 
-							if(isset($_POST['email']) && isset($_POST['fname']) && isset($_POST['lname']) && isset($_POST['pwd']) && isset($_POST['pwd2']) && isset($_POST['safe']))
+							if(isset($_POST['email']) && isset($_POST['fname']) && isset($_POST['lname']) && isset($_POST['pwd']) && isset($_POST['pwd2']))
 							{
 								$login = htmlspecialchars($_POST['email']);
 								$fname = htmlspecialchars($_POST['fname']);
 								$lname = htmlspecialchars($_POST['lname']);
 								$pwd = htmlspecialchars($_POST['pwd']);
 								$pwd2 = htmlspecialchars($_POST['pwd2']);
-								$safe = htmlspecialchars($_POST['safe']);
 								
 								echo_debug("INDEX | before pwd check<br>");
 								
@@ -125,11 +128,6 @@
 									echo_debug("INDEX | blank pwd heck NOT PASSED<br>");
 									echo '<div class=\"error_message\"><strong>Account not created, please retype password.</strong></div>';
 								}
-								elseif($safe=="")
-								{
-									echo_debug("INDEX | lastname check NOT PASSED<br>");
-									echo '<div class=\"error_message\"><strong>Account not created, please fill-in Safe ID field.</strong></div>';
-								}
 								elseif( $pwd != $pwd2)
 								{
 									echo_debug("INDEX | pwd check > pwd <> pw2<br>");
@@ -140,18 +138,18 @@
 									echo_debug("INDEX | @thomsonreuters.com check : NOT PASSED<br>");
 									echo '<div class=\"error_message\"><strong>Account not created, a Thomson Reuters valid email is required.</strong></div>';
 								}
-								elseif(!truser_check_email_safeID_compliance($bdd, $login, $safe))
+								elseif(!truser_check_email_compliance($bdd, $login))
 								{
-									echo_debug("INDEX | email and safeID check: NOT PASSED<br>");
-									echo "<div class=\"error_message\"><strong>Account not created, please check email and safeID</strong></div>";
+									echo_debug("INDEX | email check: NOT PASSED<br>");
+									echo "<div class=\"error_message\"><strong>Account not created, please check email address</strong></div>";
 								}
 								else
 								{
-									echo_debug("INDEX | email and safeID check: PASSED, then create user<br>");
+									echo_debug("INDEX | email check: PASSED, then create user<br>");
 									
 									$pwd = md5(htmlspecialchars($_POST['pwd']));
 									$pwd2 = md5(htmlspecialchars($_POST['pwd2']));
-									user_addUser($bdd, $login, $fname, $lname, $pwd, $safe);
+									user_addUser($bdd, $login, $fname, $lname, $pwd, "Check Removed");
 									$user = user_confirmPassword($bdd, $login, $pwd);
 									if($user != false) 
 									{
