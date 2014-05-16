@@ -98,7 +98,7 @@
 								// else don't give any code
 								$today = date('Y-m-d');	
 								$today = new DateTime($today);
-								$today = $today->format('Ymd');
+								$today = $today->format('Ymd His');
 								if($today<clue_getClueOnePublicationDate($bdd, $enigma->getId(),1))
 								{
 									$nbcode=2;

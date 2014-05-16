@@ -42,16 +42,16 @@
 	{
 		$enigmas = enigma_getAllEnigmas($bdd);
 		
-		$today = date('Y-m-d');	
+		$today = date('Y-m-d H:i:s');	
 		$today = new DateTime($today);
-		$today = $today->format('Ymd');
+		$today = $today->format('Ymd His');
 		
 		$viewableEnigmas = array();
 		foreach($enigmas as $enigma)
 		{
 			$publi = (string)$enigma->getPubliDate();
 			$publi = new DateTime($publi);
-			$publi = $publi->format('Ymd');
+			$publi = $publi->format('Ymd His');
 			if($today >= $publi)
 			{
 				$viewableEnigmas[] = $enigma;

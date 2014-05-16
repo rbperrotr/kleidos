@@ -120,9 +120,9 @@
 			die('Error : '.$e->getMessage());
 		}
 		
-		$today = date('Y-m-d');	
+		$today = date('Y-m-d His');	
 		$today = new DateTime($today);
-		$today = $today->format('Ymd');
+		$today = $today->format('Ymd His');
 		
 		$clues = array();
 		while($data = $response->fetch())
@@ -130,7 +130,7 @@
 			$clue = new Clue($data['id'], $data['text'], $data['enigmaID'], $data['sortID'], $data['publishedDate']);
 			$publicationDate = (string)$clue->getPublishedDate();
 			$publicationDate = new DateTime($publicationDate);
-			$publicationDate = $publicationDate->format('Ymd');
+			$publicationDate = $publicationDate->format('Ymd His');
 			
 			if($today >= $publicationDate)
 			{
@@ -163,7 +163,7 @@
 			$clue = new Clue($data['id'], $data['text'], $data['enigmaID'], $data['sortID'], $data['publishedDate']);
 			$publicationDate = (string)$clue->getPublishedDate();
 			$publicationDate = new DateTime($publicationDate);
-			$publicationDate = $publicationDate->format('Ymd');
+			$publicationDate = $publicationDate->format('Ymd His');
 			
 		}
 		return $publicationDate;	
