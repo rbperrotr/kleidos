@@ -30,7 +30,7 @@
 		{
 			while ($data = $query->fetch())
 			{
-				$enigma = new Enigma($data['id'], $data['title'], $data['text'], $data['nbClues'], $data['publiDate'], $data['ref'], $data['picture'], $data['expected_answer'], $data['buy_clue']);
+				$enigma = new Enigma($data['id'], $data['title'], $data['text'], $data['nbClues'], $data['publiDate'], $data['ref'], $data['picture'], $data['expected_answer'], $data['buy_clue'], $data['assign_code']);
 				$enigmas[] = $enigma;
 			}
 		}
@@ -60,7 +60,7 @@
 		/*OLD
 		while ($data = $response->fetch())
 		{
-			$enigma = new Enigma($data['id'], $data['title'], $data['text'], $data['nbClues'], $data['publiDate'], $data['ref'], $data['picture'], $data['expected_answer'], $data['buy_clue']);
+			$enigma = new Enigma($data['id'], $data['title'], $data['text'], $data['nbClues'], $data['publiDate'], $data['ref'], $data['picture'], $data['expected_answer'], $data['buy_clue'], $data['assign_code']);
 			$publi = (string)$enigma->getPubliDate();
 			$publi = new DateTime($publi);
 			$publi = $publi->format('Ymd');
@@ -151,6 +151,53 @@
 		
 		return 	$buy_clue;
 	}
+
+	//get Assign_Code - TRUE if answering to this enigma before hint allow getting hint code
+	function enigma_getAssignCode($bdd, $ref)
+	{
+		try
+		{
+			$reponse = $bdd->query('SELECT assign_code FROM enigma WHERE ref="'.$ref.'"');
+		}
+		catch(Exception $e)
+		{
+			die('Erreur : '.$e->getMessage());
+		}
+		
+		while ($donnees = $reponse->fetch())
+		{
+			$assign_code = $donnees['assign_code'];
+		}
+		
+		return 	$assign_code;
+	}
+	function OLDenigma_getAssignCode($bdd, $ref)
+	{
+		echo_debug('ENIGMA Controller | enigma_getAssignCode(Ref='.$ref.')<br>');
+		
+		$query = $bdd->prepare('SELECT assign_code FROM enigma WHERE ref=:er');
+		$query->execute(array(
+				'er' => $ref
+		));
+		
+		try
+		{
+			$nb_rows = $query->rowCount();
+		}
+		catch(Exception $e)
+		{
+			$nb_rows = 0;
+		}
+		
+		if($nb_rows > 0)
+		{
+			while ($data = $query->fetch())
+			{
+				$assign_code = $data['assign_code'];
+			}
+		}
+		return 	$assign_code;
+	}
 	
 	//get 1 enigma
 	function enigma_getEnigma($bdd, $ref)
@@ -161,7 +208,7 @@
 		));
 		while ($donnees = $reponse->fetch())
 		{
-			$enigma = new Enigma($donnees['id'], $donnees['title'], $donnees['text'], $donnees['nbClues'], $donnees['publiDate'], $donnees['ref'], $donnees['picture'], $donnees['expected_answer'], $donnees['buy_clue']);
+			$enigma = new Enigma($donnees['id'], $donnees['title'], $donnees['text'], $donnees['nbClues'], $donnees['publiDate'], $donnees['ref'], $donnees['picture'], $donnees['expected_answer'], $donnees['buy_clue'], $data['assign_code']);
 		}
 		return $enigma;
 	}

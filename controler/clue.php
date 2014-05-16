@@ -143,7 +143,7 @@
 	/**********************************************************************************************
 	 * Return the date of clue number N for a given EnigmaID
 	 **********************************************************************************************/
-	function clue_getClueOnePublicationDate ($bdd, $enigmaID, $sortID)
+	function clue_getClueNPublicationDate ($bdd, $enigmaID, $sortID)
 	{
 		try
 		{  

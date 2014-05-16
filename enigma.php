@@ -42,6 +42,9 @@
 			}
 			
 			$enigma = enigma_getEnigma($bdd, $eID);
+			echo_debug('ENIGMA | Start for enigmaID['.$eID.']<br>');
+			echo_debug('ENIGMA | EnigmaRef['.$enigma->getRef().']<br>');
+			echo_debug('ENIGMA | EnigmaAssignCode['.$enigma->getAssignCode().']<br>');
 		
 		?>
 		<div id="enigma_wrapper">
@@ -93,36 +96,53 @@
 							else
 							{
 								answer_saveAnswer($bdd, $enigma->getId(), $_SESSION['uid'], $u_answer, 'YES');
-								// if $now<publishedDate clue#1 give 2 codes
-								// if $now<publishedDate clue#2 give 1 code
-								// else don't give any code
-								$today = date('Y-m-d');	
-								$today = new DateTime($today);
-								$today = $today->format('Ymd His');
-								if($today<clue_getClueOnePublicationDate($bdd, $enigma->getId(),1))
-								{
-									$nbcode=2;
-									echo_debug("ENIGMA | will give two codes<br>");
-									$code1 = code_getANewCode($bdd);
-									code_assignCode($bdd, $_SESSION['uid'], $enigma->getId(), $code1->getId());	
-									$code2 = code_getANewCode($bdd);
-									code_assignCode($bdd, $_SESSION['uid'], $enigma->getId(), $code2->getId());	
-									echo "<article><span class=\"correct_answer\">Congratulations! <br/> The correct answer is:  <span class=\"correct_answer\"> ".$enigma->getExpected_answer()."</span><br/> Thanks to your this right answer you won a hint code: ".$code1->getText().".<br/>You have been so quick to answer than you even win a bonus code: ".$code2->getText()."<br> Keep them carefully as you may want to use them later. </div></article>";
-								}
-								elseif($today<clue_getClueOnePublicationDate($bdd, $enigma->getId(),2))
-								{
-									$nbcode=1;
-									echo_debug("ENIGMA | will give one codes<br>");
-									$code1 = code_getANewCode($bdd);
-									code_assignCode($bdd, $_SESSION['uid'], $enigma->getId(), $code1->getId());	
-									echo "<article><div class=\"correct_answer\">Congratulations! <br/> The correct answer is:  <span class=\"strong_correct_answer\"> ".$enigma->getExpected_answer()."</span><br/> Thanks to this right answer you won a hint code: ".$code1->getText().".<br/> Keep it carefully as you may want to use it later. </div></article>";
+								echo_debug('ENIGMA | analyse answer - Good answer <br>'); 
+								$enigmaAssignCode = enigma_getAssignCode($bdd, $enigma->getRef());
+								echo_debug('ENIGMA | analyse answer - Enigma Assign Code [EnigmaID='.$enigma->getId().']= '.$enigmaAssignCode.' <br>'); 
+								if ($enigmaAssignCode==true) 
+								{	
+									echo_debug('ENIGMA | analyse answer - Good answer - Code to be assigned<br>'); 
+									// if $now<publishedDate clue#1 give 2 codes
+									// if $now<publishedDate clue#2 give 1 code
+									// else don't give any code
+									$today = date('Y-m-d');	
+									$today = new DateTime($today);
+									$today = $today->format('Ymd His');
+									if($today<clue_getClueNPublicationDate($bdd, $enigma->getId(),1))
+									{
+										echo_debug('ENIGMA | analyse answer - Good answer - Code to be assigned - 2 codes<br>'); 
+										$nbcode=2;
+										echo_debug("ENIGMA | will give two codes<br>");
+										$code1 = code_getANewCode($bdd);
+										code_assignCode($bdd, $_SESSION['uid'], $enigma->getId(), $code1->getId());	
+										$code2 = code_getANewCode($bdd);
+										code_assignCode($bdd, $_SESSION['uid'], $enigma->getId(), $code2->getId());	
+										echo "<article><span class=\"correct_answer\">Congratulations! <br/> The correct answer is:  <span class=\"correct_answer\"> ".$enigma->getExpected_answer()."</span><br/> Thanks to your this right answer you won a hint code: ".$code1->getText().".<br/>You have been so quick to answer than you even win a bonus code: ".$code2->getText()."<br> Keep them carefully as you may want to use them later. </div></article>";
+									}
+									elseif($today<clue_getClueNPublicationDate($bdd, $enigma->getId(),2))
+									{
+										echo_debug('ENIGMA | analyse answer - Good answer - Code to be assigned - 1 code<br>'); 
+										$nbcode=1;
+										echo_debug("ENIGMA | will give one codes<br>");
+										$code1 = code_getANewCode($bdd);
+										code_assignCode($bdd, $_SESSION['uid'], $enigma->getId(), $code1->getId());	
+										echo "<article><div class=\"correct_answer\">Congratulations! <br/> The correct answer is:  <span class=\"strong_correct_answer\"> ".$enigma->getExpected_answer()."</span><br/> Thanks to this right answer you won a hint code: ".$code1->getText().".<br/> Keep it carefully as you may want to use it later. </div></article>";
+									}
+									else
+									{
+										echo_debug('ENIGMA | analyse answer - Good answer - Code to be assigned - 0 code<br>'); 
+										$nbcode=0;
+										$congratulationMessage="";
+										echo_debug("ENIGMA | will not give any codes<br>");
+										echo "<article><div class=\"correct_answer\">Congratulations! <br/> The correct answer is:  <span class=\"strong_correct_answer\"> ".$enigma->getExpected_answer()."</span><br/> Stay tuned to see new enigmas and get code by answering before hints are published.<br/></div></article>";
+									}
 								}
 								else
 								{
 									$nbcode=0;
 									$congratulationMessage="";
-									echo_debug("ENIGMA | will not give any codes<br>");
-									echo "<article><div class=\"correct_answer\">Congratulations! <br/> The correct answer is:  <span class=\"strong_correct_answer\"> ".$enigma->getExpected_answer()."</span><br/> Stay tuned to see new enigmas and get code by answering before hints are published.<br/></div></article>";
+									echo_debug('ENIGMA | analyse answer - Good answer - No code to be assignede<br>'); 
+									echo "<article><div class=\"correct_answer\">Congratulations! <br/> The correct answer is:  <span class=\"strong_correct_answer\"> ".$enigma->getExpected_answer()."</span><br/> Stay tuned to see new enigmas.<br/></div></article>";
 								}
 							}
 						}

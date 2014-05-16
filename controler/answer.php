@@ -243,7 +243,7 @@
 	//Saving user answer
 	function answer_saveAnswer($bdd, $enigmaID, $userID, $answer, $correct_answer)
 	{
-		echo_debug("function answer_saveAnswer<br>");
+		echo_debug("ANSWER SAVE ANSWER | function answer_saveAnswer<br>");
 		$query = $bdd->prepare('INSERT INTO submitted_answers (enigma_id, user_id, answer, date_time, correct_answer) VALUES (:ei, :ui, :ua, NOW(), :ca)');
 		$query->execute(array(
 				'ei' => $enigmaID,
@@ -255,7 +255,7 @@
 		if(notifyOnEachAnswer())
 		{
 			//prepare email for notification to the guardians
-			
+			echo_debug("ANSWER SAVE ANSWER | prepare notification email<br>");	
 			$fullname = user_getFullName($bdd, $userID);
 			
 			$new_line = "\r\n";
@@ -287,5 +287,6 @@
 				}
 			}
 		}
+		echo_debug("ANSWER SAVE ANSWER | End<br>");
 	}
 ?>

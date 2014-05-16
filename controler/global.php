@@ -74,12 +74,12 @@
 			if($_SESSION['EMAILNOTIF']==1)
 			{
 				$canemail=  TRUE;
-				echo_debug("Send email notif");
+				echo_debug("CAN EMAIL | Send email notif<br>");
 			}
 			else
 			{
 				$canemail=FALSE;
-				echo_debug("Do not send email notif");
+				echo_debug("CAN EMAIL | Do not send email notif<br>");
 			}
 		}
 		else
@@ -96,12 +96,12 @@
 			if($_SESSION['ANSWERS_NOTIF']==1)
 			{
 				$notifyOnEachAnswer=TRUE;
-				echo_debug("Notification on each answer is ON<br>");
+				echo_debug("NOTIFY ON EACH ANSWER | Notification on each answer is ON<br>");
 			}
 			else
 			{
 				$notifyOnEachAnswer=FALSE;
-				echo_debug("Notification on each answer is OFF<br>");
+				echo_debug("NOTIFY ON EACH ANSWER | Notification on each answer is OFF<br>");
 			}
 		}
 		else

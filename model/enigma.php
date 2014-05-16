@@ -10,8 +10,9 @@
 		private $picture;
 		private $expected_answer;
 		private $buy_clue;	
+		private $assign_code;
 		
-		function Enigma($n_id, $n_title, $n_text, $n_nbClue, $n_publiDate, $n_ref, $n_picture, $n_expected_answer, $n_buy_clue)
+		function Enigma($n_id, $n_title, $n_text, $n_nbClue, $n_publiDate, $n_ref, $n_picture, $n_expected_answer, $n_buy_clue, $n_assign_code)
 		{
 			$this->id = $n_id;
 			$this->title = $n_title;
@@ -22,6 +23,8 @@
 			$this->picture = $n_picture;
 			$this->expected_answer = $n_expected_answer;
 			$this->buy_clue = $n_buy_clue;
+			$this->assign_code = $n_assign_code;
+			echo_debug('MODEL ENIGMA | Constructor n_assign_code='.$n_assign_code.'.<br>');
 		}
 		
 		public function getId()
@@ -112,6 +115,17 @@
 		public function setBuyClue($newBuyClue)
 		{
 			$this->buy_clue = $newBuyClue;
+		}		
+		
+		public function getAssignCode()
+		{
+			echo_debug('MODEL ENIGMA | getAssignCode'.$this->assign_code.'<br>');
+			return $this->assign_code;
+		}
+		
+		public function setAssignCode($newAssignCode)
+		{
+			$this->assign_code = $newAssignCode;
 		}
 	}
 ?>
