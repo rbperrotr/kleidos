@@ -206,9 +206,9 @@
 		$reponse->execute(array(
 				'ref' => $ref
 		));
-		while ($donnees = $reponse->fetch())
+		while ($data = $reponse->fetch())
 		{
-			$enigma = new Enigma($donnees['id'], $donnees['title'], $donnees['text'], $donnees['nbClues'], $donnees['publiDate'], $donnees['ref'], $donnees['picture'], $donnees['expected_answer'], $donnees['buy_clue'], $data['assign_code']);
+			$enigma = new Enigma($data['id'], $data['title'], $data['text'], $data['nbClues'], $data['publiDate'], $data['ref'], $data['picture'], $data['expected_answer'], $data['buy_clue'], $data['assign_code']);
 		}
 		return $enigma;
 	}

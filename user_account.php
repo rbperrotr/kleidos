@@ -13,6 +13,8 @@
 			require('controler/global.php');
 			require('controler/code.php');
 			require('controler/user.php');
+			require('model/ad.php');
+			require('controler/ad.php');
 			
 			
 			if(checkLogin() == true)
@@ -170,7 +172,7 @@
 		?>		
 		</strong></p>
 		<?php
-				includeFooter();
+				includeFooter($bdd);
 		?>
 	</body>
 </html>

@@ -17,7 +17,7 @@
 		include('pages/banner_createuser.php');
 	}
 	
-	function includeFooter()
+	function includeFooter($bdd)
 	{
 		include('pages/footer.php');
 	}
@@ -109,5 +109,10 @@
 			$notifyOnEachAnswer=  TRUE;
 		}
 		return $notifyOnEachAnswer;
+	}
+	
+	function includeBannerAd($bdd)
+	{
+		include('pages/banner_ad.php');
 	}
 ?>

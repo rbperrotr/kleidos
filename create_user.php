@@ -11,6 +11,8 @@
 		<?php
 			require('controler/bdd.php');
 			require('controler/global.php');
+			require('model/ad.php');
+			require('controler/ad.php');
 			/* require('model/user.php');
 			require('controler/user.php');
 			if(checkLogin() == false)
@@ -50,7 +52,7 @@
 		This game is primary targeting Unified Platform Group, if you are not part of UPG, you can request an account by contactint the Gardians. 
 		If you have trouble signing in, please contact the <a href="mailto: guardians@kleidos.tk">guardians</a>.<br>
 		<?php
-				includeFooter();
+				includeFooter($bdd);
 		?>
 	</body>
 </html>

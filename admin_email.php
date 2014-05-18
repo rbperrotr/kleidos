@@ -22,6 +22,7 @@
 			require('controler/bdd.php');
 			require('controler/global.php');
 			require('controler/admin.php');
+			require('controler/ad.php');
 			$bcc = "";
 
 			if(checkLogin() == true)
@@ -134,7 +135,7 @@
 		</p>
 
 		<?php
-			includeFooter();
+			includeFooter($bdd);
 		?>
 	</body>
 </html>

@@ -16,6 +16,8 @@
 			require('model/enigma.php');
 			require('controler/enigma.php');
 			require('controler/answer.php');
+			require('controler/ad.php');
+			require('model/ad.php');
 			if(checkLogin() == true)
 			{
 				includeBanner();
@@ -58,7 +60,8 @@
 		</p>
 		<!--/form-->
 		<?php
-				includeFooter();
+				includeFooter($bdd);
 		?>
+		
 	</body>
 </html>

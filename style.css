@@ -98,6 +98,15 @@ input:-webkit-autofill:focus {
 	width: 60%;
 	padding-right: 0px;
 }
+
+.banner_ad
+{
+	display: inline-block;
+	float: left;
+	float: left;
+	width: 200px;
+	margin: 10px;
+}
 .email_banner
 {
 	vertical-align: top;
@@ -132,7 +141,7 @@ input:-webkit-autofill:focus {
 	float: left;
 	float: left;
 	width: 400px;
-	hight: 300px;
+	height: 300px;
 	margin: 10px;
 }
 

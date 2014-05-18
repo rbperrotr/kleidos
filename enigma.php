@@ -21,6 +21,8 @@
 			require('controler/clue.php');
 			require('model/answer.php');
 			require('controler/answer.php');
+			require('model/ad.php');
+			require('controler/ad.php');
 			if(checkLogin() == true)
 			{
 				includeBanner();
@@ -254,7 +256,7 @@
 		</section>
 		
 		<?php
-			includeFooter();
+			includeFooter($bdd);
 		?>
 	</body>
 </html>
