@@ -36,7 +36,8 @@ function unhide(divID) {
 		echo('</table></div>');
 		echo('<h3>Email</h3>');
 		echo('<table><tr><td><br><form method="post" action="admin_email.php"><input type="hidden" name="action" value="open_email_test" /><input class="adminEmailButton" type="submit" value="Send test email"><br>Send a test email to the guardians.</form></td>');
-		echo('<td><br><form method="post" action="admin_email.php"><input type="hidden" name="action" value="open_email_allplayers" /><input class="adminEmailButton" type="submit" value="Send email to all players"><br>Send an email to all players.</form></td></tr></table>');
+		echo('<td><br><form method="post" action="admin_email.php"><input type="hidden" name="action" value="open_email_allplayers" /><input class="adminEmailButton" type="submit" value="Send email to all players"><br>Send an email to all players.</form></td>');
+		echo('<td><br><form method="post" action="admin_email.php"><input type="hidden" name="action" value="open_email_someplayers" /><input class="adminEmailButton" type="submit" value="Send email to some players"><br>Send an email to some players.</form></td></tr></table>');
 				
 		$emails = admin_getallemails($bdd);
 		echo('<br><a href="javascript:unhide(\'UsersAllEmails\');">Display list of all emails / Hide</a><br>');

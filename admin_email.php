@@ -53,41 +53,68 @@
 				//Set TESTFLAG when opening the form
 				if(htmlspecialchars($_POST['action']) == "open_email_allplayers")
 				{
+					echo_debug('ADMIN EMAIL | Set TESTFLAG to 0<br>');
+					$_SESSION['TESTFLAG']=0;  
+				}
+				elseif(htmlspecialchars($_POST['action']) == "open_email_someplayers")
+				{
+					echo_debug('ADMIN EMAIL | Set TESTFLAG to 0<br>');
 					$_SESSION['TESTFLAG']=0;  
 				}
 				elseif(htmlspecialchars($_POST['action']) == "open_email_test")
 				{
+					echo_debug('ADMIN EMAIL | Set TESTFLAG to 1<br>');
 					$_SESSION['TESTFLAG']=1;  
 				}
 			}
 			
-
-			echo ("<p><h2>Use this page to send an email to all players</h2><br>");
 			echo_debug("ADMIN EMAIL | TESTFLAG ".$_SESSION['TESTFLAG']);
 			//if not in test mode display a warning and list of email addresses
-			if($_SESSION['TESTFLAG']==0)
+			if(htmlspecialchars($_POST['action']) == "open_email_allplayers")
 			{
-				echo "<div style=\"color:yellow\">Test mode is OFF. Your email will be sent to all players.</div>";
-				$emails = admin_getallemails($bdd);
-				echo('<br><a href="javascript:unhide(\'UsersAllEmails\');">Display/hide bcc distribution list</a><br>');
-				echo('<div id="UsersAllEmails" class="admHidden">');
-				echo('<table style="width:800px" class="bluetext"><tr><td>');
-				foreach ($emails as $anemail)
+				echo ("<p><h2>Use this page to send an email to all players</h2><br>");
+				if($_SESSION['TESTFLAG']==0)
 				{
-					echo ("".$anemail."; ");
+					echo "<div style=\"color:yellow\">Test mode is OFF. Your email will be sent to all players.</div>";
+					$emails = admin_getallemails($bdd);
+					echo('<br><a href="javascript:unhide(\'UsersAllEmails\');">Display/hide bcc distribution list</a><br>');
+					echo('<div id="UsersAllEmails" class="admHidden">');
+					echo('<table style="width:800px" class="bluetext"><tr><td>');
+					foreach ($emails as $anemail)
+					{
+						echo ("".$anemail."; ");
+					}
+					echo('</td></tr></table></div>');
 				}
-				echo('</td></tr></table></div>');
+				else
+				{
+					echo "<div>Test mode is ON</div>";
+				}
+			}
+			elseif(htmlspecialchars($_POST['action']) == "open_email_someplayers")
+			{
+				echo ("<p><h2>Use this page to send an email to some players</h2><br>");
+				if($_SESSION['TESTFLAG']==0)
+					echo "<div style=\"color:yellow\">Test mode is OFF. Your email will be sent to the players listed below.</div>";
+				else
+					echo "<div>Test mode is ON</div>";
 			}
 			else
 			{
+				echo ("<p><h2>Use this page to send a test email to guardians</h2><br>");
 				echo "<div>Test mode is ON</div>";
 			}
-			
-			echo('');
 		?>
 		<form method="post" action="admin_email_result.php">
+			<?php
+				if(htmlspecialchars($_POST['action']) == "open_email_someplayers")
+				{
+					echo('<div class="formtextinputlabel">To*</div>');
+					echo('<input class="formlongtextinput" type="text" name="admin_some_players_email"><br>');
+				}
+			?>
 			<div class="formtextinputlabel">Subject*</div>
-			<input class="formtextinputlabel" type="text" name="admin_email_subject"><br>
+			<input class="formlongtextinput" type="text" name="admin_email_subject"><br>
 			<div class="formtextinputlabel">Message*</div>
 			<textarea class="formtextareainput" name="admin_email_message"></textarea>
 			<br>
@@ -97,6 +124,8 @@
 				echo ('<input type="hidden" name="action" value="send_email_allplayers" />');
 			elseif(htmlspecialchars($_POST['action']) == "open_email_test")
 				echo ('<input type="hidden" name="action" value="send_email_test" />');
+			elseif(htmlspecialchars($_POST['action']) == "open_email_someplayers")
+				echo ('<input type="hidden" name="action" value="send_email_someplayers" />');
 			else
 				echo ('<input type="hidden" name="action" value="admin_email_notset" />');
 			?>

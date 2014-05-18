@@ -394,7 +394,16 @@ Button:hover
 .formtextinput
 {
 	font-family: "Segoe UI Light","Segoe UI Web Light","Segoe UI Web Regular","Segoe UI","Segoe UI Symbol","HelveticaNeue-Light","Helvetica Neue",Arial,sans-serif;
-	width: 260px;
+	width: 600px;
+	height: 22px;
+	padding: 4px 8px;
+	background: white;
+}
+
+.formlongtextinput
+{
+	font-family: "Segoe UI Light","Segoe UI Web Light","Segoe UI Web Regular","Segoe UI","Segoe UI Symbol","HelveticaNeue-Light","Helvetica Neue",Arial,sans-serif;
+	width: 600px;
 	height: 22px;
 	padding: 4px 8px;
 	background: white;
